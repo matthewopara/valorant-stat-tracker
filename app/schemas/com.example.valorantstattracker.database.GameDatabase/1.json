@@ -1,0 +1,100 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "31ee9d100be074dd44ef5a32db5b0de8",
+    "entities": [
+      {
+        "tableName": "game_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`game_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `entry_time_milli` INTEGER NOT NULL, `result` INTEGER NOT NULL, `agent_name` TEXT NOT NULL, `combat_score` INTEGER NOT NULL, `kills` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `assists` INTEGER NOT NULL, `econ_rating` INTEGER NOT NULL, `first_bloods` INTEGER NOT NULL, `plants` INTEGER NOT NULL, `defuses` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "gameId",
+            "columnName": "game_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entryTimeMilli",
+            "columnName": "entry_time_milli",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "result",
+            "columnName": "result",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "agentName",
+            "columnName": "agent_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "combatScore",
+            "columnName": "combat_score",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kills",
+            "columnName": "kills",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deaths",
+            "columnName": "deaths",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "assists",
+            "columnName": "assists",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "econRating",
+            "columnName": "econ_rating",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstBloods",
+            "columnName": "first_bloods",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plants",
+            "columnName": "plants",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defuses",
+            "columnName": "defuses",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "game_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '31ee9d100be074dd44ef5a32db5b0de8')"
+    ]
+  }
+}
