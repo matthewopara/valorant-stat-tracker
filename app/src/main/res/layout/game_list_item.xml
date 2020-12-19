@@ -15,8 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:cardCornerRadius="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,19 +34,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@+id/agent_image_card"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Win"
-            tools:textColor="@color/game_win" />
+            tools:textColor="@color/black" />
 
         <TextView
             android:id="@+id/kda_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"

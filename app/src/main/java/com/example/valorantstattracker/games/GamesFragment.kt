@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.valorantstattracker.AgentName
 import com.example.valorantstattracker.GameResult
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDatabase
@@ -55,8 +56,10 @@ class GamesFragment : Fragment() {
 
     private fun initRecyclerView() {
         gamesAdapter = GamesRecyclerAdapter(resources)
+        val decoration = GameItemDecoration(30)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@GamesFragment.context)
+            addItemDecoration(decoration)
             adapter = gamesAdapter
         }
     }
