@@ -1,12 +1,13 @@
 package com.example.valorantstattracker.games
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.valorantstattracker.AgentName
+import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.GameResult
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDatabase
@@ -23,18 +24,23 @@ class GamesFragment : Fragment() {
         binding = FragmentGamesBinding.inflate(inflater)
         gamesViewModel = createGamesViewModel()
 
-          //For Testing
+        // TODO: Remove this for loop after implementing FAB onClick
 //        for (i in 1..15) {
-//            gamesViewModel.createGame(makeGame(AgentName.OMEN))
+//            gamesViewModel.createGame(makeGame(Agent.OMEN))
 //        }
 
         initRecyclerView()
         displayGameHistory()
 
+        binding.newGameButton.setOnClickListener {
+            // TODO: Open pop-up window for game data entry
+            Log.d("GamesFragment", "Enter Game Data")
+        }
+
         return binding.root
     }
 
-    // For Testing
+    // TODO: Remove this testing method after implementing FAB onClick
     private fun makeGame(agentName: String): Game {
         return Game(entryTimeMilli = 10, result = GameResult.WIN,
             agentName = agentName, combatScore = 100, kills = 20, deaths = 20,
@@ -47,13 +53,6 @@ class GamesFragment : Fragment() {
         return GamesViewModel(dataSource, application)
     }
 
-    private fun displayGameHistory() {
-        gamesViewModel.gameHistory.observe(viewLifecycleOwner, { gameHistory ->
-            gamesAdapter.submitList(gameHistory)
-            binding.recyclerView.adapter = gamesAdapter
-        })
-    }
-
     private fun initRecyclerView() {
         gamesAdapter = GamesRecyclerAdapter(resources)
         val decoration = GameItemDecoration(30)
@@ -62,5 +61,12 @@ class GamesFragment : Fragment() {
             addItemDecoration(decoration)
             adapter = gamesAdapter
         }
+    }
+
+    private fun displayGameHistory() {
+        gamesViewModel.gameHistory.observe(viewLifecycleOwner, { gameHistory ->
+            gamesAdapter.submitList(gameHistory)
+            binding.recyclerView.adapter = gamesAdapter
+        })
     }
 }
