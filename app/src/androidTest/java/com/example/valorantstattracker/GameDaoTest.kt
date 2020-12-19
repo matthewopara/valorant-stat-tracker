@@ -108,12 +108,12 @@ class GameDaoTest {
     fun getGamesWithAgentOnlyReturnsThatAgent() {
         ioScope.launch {
             for (i in 1..3) {
-                gameDao.insert(createGameWithAgent(AgentName.BREACH))
-                gameDao.insert(createGameWithAgent(AgentName.OMEN))
+                gameDao.insert(createGameWithAgent(Agent.BREACH))
+                gameDao.insert(createGameWithAgent(Agent.OMEN))
             }
 
-            val omenGames = gameDao.getGamesWithAgent(AgentName.OMEN)
-            val numOfNotOmenGames = omenGames.count { it.agentName != AgentName.OMEN }
+            val omenGames = gameDao.getGamesWithAgent(Agent.OMEN)
+            val numOfNotOmenGames = omenGames.count { it.agentName != Agent.OMEN }
 
             assertEquals(0, numOfNotOmenGames)
         }
@@ -167,7 +167,7 @@ class GameDaoTest {
 
     private fun createGameWithId(id: Long): Game {
         return Game(id, 10, GameResult.WIN,
-            AgentName.BREACH, 100, 20, 20,
+            Agent.BREACH, 100, 20, 20,
             20, 30, 2, 2, 1)
     }
 
@@ -179,7 +179,7 @@ class GameDaoTest {
 
     private fun createGameWithResult(result: Int): Game {
         return Game(entryTimeMilli = 10, result = result,
-            agentName = AgentName.BREACH, combatScore = 100, kills = 20, deaths = 20,
+            agentName = Agent.BREACH, combatScore = 100, kills = 20, deaths = 20,
             assists = 20, econRating = 30, firstBloods = 2, plants = 2, defuses = 1)
     }
 }
