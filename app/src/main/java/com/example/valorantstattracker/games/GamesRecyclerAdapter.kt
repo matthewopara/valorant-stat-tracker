@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.valorantstattracker.GameResult
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
+import com.example.valorantstattracker.databinding.GameListItemBinding
 
 class GamesRecyclerAdapter(private val resources: Resources) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<Game> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return GameViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.game_list_item, parent, false), resources)
+        val binding = GameListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return GameViewHolder(binding, resources)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -35,10 +36,10 @@ class GamesRecyclerAdapter(private val resources: Resources) : RecyclerView.Adap
         items = gamesList
     }
 
-    private class GameViewHolder(itemView: View, val resources: Resources): RecyclerView.ViewHolder(itemView) {
-        val gameResult: TextView = itemView.findViewById(R.id.game_result_text)
-        val kda: TextView = itemView.findViewById(R.id.kda_text)
-        val agentImage: ImageView = itemView.findViewById(R.id.agent_image)
+    private class GameViewHolder(binding: GameListItemBinding, val resources: Resources): RecyclerView.ViewHolder(binding.root) {
+        val gameResult: TextView = binding.gameResultText
+        val kda: TextView = binding.kdaText
+        val agentImage: ImageView = binding.agentImage
 
         fun bind(game: Game) {
             gameResult.text = convertGameResult(game.result)
