@@ -3,11 +3,11 @@ package com.example.valorantstattracker.games
 import android.content.res.Resources
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.GameResult
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
@@ -15,7 +15,7 @@ import com.example.valorantstattracker.databinding.GameListItemBinding
 
 class GamesRecyclerAdapter(private val resources: Resources) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items: List<Game> = ArrayList()
+    private var games: List<Game> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = GameListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,16 +24,16 @@ class GamesRecyclerAdapter(private val resources: Resources) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is GameViewHolder -> holder.bind(items[position])
+            is GameViewHolder -> holder.bind(games[position])
         }
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return games.size
     }
 
     fun submitList(gamesList: List<Game>) {
-        items = gamesList
+        games = gamesList
     }
 
     private class GameViewHolder(binding: GameListItemBinding, val resources: Resources): RecyclerView.ViewHolder(binding.root) {
@@ -45,8 +45,10 @@ class GamesRecyclerAdapter(private val resources: Resources) : RecyclerView.Adap
             gameResult.text = convertGameResult(game.result)
             gameResult.setTextColor(getGameResultColor(game.result))
             kda.text = resources.getString(R.string.kda, game.kills, game.deaths, game.assists)
-            // TODO: set image to correct agent image
-            agentImage.setImageResource(R.drawable.ic_launcher_background)
+            val imgResource = Agent.getImageResource(game.agentName)
+            imgResource?.let {
+                agentImage.setImageResource(it)
+            }
         }
 
         private fun convertGameResult(result: Int): String {
