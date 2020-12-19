@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Valorant Stat Tracker</string>
+    <string name="win">Win</string>
+    <string name="lose">Lose</string>
+    <string name="draw">Draw</string>
+    <string name="kda">%d/%d/%d</string>
 </resources>
