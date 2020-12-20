@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/gamesFragment">
+    <fragment
+        android:id="@+id/gamesFragment"
+        android:name="com.example.valorantstattracker.games.GamesFragment"
+        android:label="fragment_games"
+        tools:layout="@layout/fragment_games" >
+        <action
+            android:id="@+id/action_games_to_gameEntry"
+            app:destination="@id/gameEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameEntryFragment"
+        android:name="com.example.valorantstattracker.games.GameEntryFragment"
+        android:label="fragment_game_entry"
+        tools:layout="@layout/fragment_game_entry" />
+</navigation>

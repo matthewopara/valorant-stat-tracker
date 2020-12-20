@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.GameResult
@@ -38,7 +39,9 @@ class GamesFragment : Fragment() {
         displayGameHistory()
 
         binding.newGameButton.setOnClickListener {
-            // TODO: Open pop-up window for game data entry
+            // TODO: Open game entry fragment for game data entry
+            val action = GamesFragmentDirections.actionGamesToGameEntry()
+            findNavController().navigate(action)
             Log.d("GamesFragment", "Enter Game Data")
         }
 
