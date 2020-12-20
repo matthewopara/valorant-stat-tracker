@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.GameResult
@@ -17,12 +18,15 @@ class GamesFragment : Fragment() {
 
     private lateinit var binding: FragmentGamesBinding
     private lateinit var gamesViewModel: GamesViewModel
+    private lateinit var gamesViewModelFactory: GamesViewModelFactory
     private lateinit var gamesAdapter: GamesRecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentGamesBinding.inflate(inflater)
-        gamesViewModel = createGamesViewModel()
+        gamesViewModelFactory = createGamesViewModelFactory()
+        gamesViewModel = ViewModelProvider(this, gamesViewModelFactory)
+            .get(GamesViewModel::class.java)
 
         // TODO: Remove this for loop after implementing FAB onClick
 //        for (i in 1..15) {
@@ -47,10 +51,10 @@ class GamesFragment : Fragment() {
             assists = 20, econRating = 30, firstBloods = 2, plants = 2, defuses = 1)
     }
 
-    private fun createGamesViewModel(): GamesViewModel {
+    private fun createGamesViewModelFactory(): GamesViewModelFactory {
         val application = requireNotNull(activity).application
         val dataSource = GameDatabase.getInstance(application).getGameDao()
-        return GamesViewModel(dataSource, application)
+        return GamesViewModelFactory(dataSource, application)
     }
 
     private fun initRecyclerView() {
