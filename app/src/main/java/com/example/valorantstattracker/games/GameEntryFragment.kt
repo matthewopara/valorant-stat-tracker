@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.databinding.FragmentGameEntryBinding
+import com.google.android.material.textfield.TextInputEditText
 
 private const val AGENT_KEY = "AGENT"
 private const val RESULT_KEY = "RESULT"
@@ -30,8 +31,14 @@ class GameEntryFragment : Fragment() {
     private fun prepareForDataRetrieval(savedInstanceState: Bundle?) {
         setUpAgentMenu(savedInstanceState)
         setUpResultMenu(savedInstanceState)
-        setUpCombatScoreInput()
-        setUpKillsInput()
+        setUpTextInput(binding.combatScoreInput)
+        setUpTextInput(binding.killsInput)
+        setUpTextInput(binding.deathsInput)
+        setUpTextInput(binding.assistsInput)
+        setUpTextInput(binding.econRatingInput)
+        setUpTextInput(binding.firstBloodsInput)
+        setUpTextInput(binding.defusesInput)
+        setUpTextInput(binding.plantsInput)
     }
 
     private fun setUpAgentMenu(savedInstanceState: Bundle?) {
@@ -52,15 +59,9 @@ class GameEntryFragment : Fragment() {
         binding.gameResultMenu.setAdapter(resultAdapter)
     }
 
-    private fun setUpCombatScoreInput() {
-        binding.combatScoreInput.doOnTextChanged { inputText, _, _, _ ->
-            binding.combatScoreInput.error = makeErrorMessage(inputText)
-        }
-    }
-
-    private fun setUpKillsInput() {
-        binding.killsInput.doOnTextChanged { inputText, _, _, _ ->
-            binding.killsInput.error = makeErrorMessage(inputText)
+    private fun setUpTextInput(editText: TextInputEditText) {
+        editText.doOnTextChanged { inputText, _, _, _ ->
+            editText.error = makeErrorMessage(inputText)
         }
     }
 

@@ -10,4 +10,11 @@
     <string name="combat_score">Combat Score</string>
     <string name="kills">Kills</string>
     <string name="error_int">An number is required</string>
+    <string name="deaths">Deaths</string>
+    <string name="assists">Assists</string>
+    <string name="economy_rating">Economy Rating</string>
+    <string name="first_bloods">First Bloods</string>
+    <string name="plants">Plants</string>
+    <string name="defuses">Defuses</string>
+    <string name="confirm">Confirm</string>
 </resources>
