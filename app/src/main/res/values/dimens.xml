@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tiny_spacing">8dp</dimen>
+    <dimen name="small_spacing">16dp</dimen>
+    <dimen name="game_item_spacing">30dp</dimen>
+</resources>

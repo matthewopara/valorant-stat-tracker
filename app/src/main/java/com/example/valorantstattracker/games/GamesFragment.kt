@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.GameResult
+import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGamesBinding
@@ -59,7 +60,7 @@ class GamesFragment : Fragment() {
 
     private fun initRecyclerView() {
         gamesAdapter = GamesRecyclerAdapter(resources)
-        val decoration = GameItemDecoration(30)
+        val decoration = GameItemDecoration(R.dimen.game_item_spacing)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@GamesFragment.context)
             addItemDecoration(decoration)
