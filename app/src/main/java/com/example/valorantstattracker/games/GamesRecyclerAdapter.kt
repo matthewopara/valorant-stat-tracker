@@ -48,6 +48,7 @@ class GamesRecyclerAdapter(private val resources: Resources) : RecyclerView.Adap
             val imgResource = Agent.getImageResource(game.agentName)
             imgResource?.let {
                 agentImage.setImageResource(it)
+                agentImage.contentDescription = game.agentName
             }
         }
 
