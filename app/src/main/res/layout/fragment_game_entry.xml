@@ -62,7 +62,7 @@
         app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
         app:layout_constraintTop_toTopOf="parent">
 
-        <AutoCompleteTextView
+        <com.example.valorantstattracker.ExposedDropDownMenu
             android:id="@+id/game_result_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <AutoCompleteTextView
+        <com.example.valorantstattracker.ExposedDropDownMenu
             android:id="@+id/agent_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

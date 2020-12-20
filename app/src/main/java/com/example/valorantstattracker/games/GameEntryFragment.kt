@@ -11,6 +11,9 @@ import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.databinding.FragmentGameEntryBinding
 
+private const val AGENT_KEY = "AGENT"
+private const val RESULT_KEY = "RESULT"
+
 class GameEntryFragment : Fragment() {
 
     private lateinit var binding: FragmentGameEntryBinding
@@ -19,24 +22,27 @@ class GameEntryFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
 
         binding = FragmentGameEntryBinding.inflate(inflater)
-        prepareForDataRetrieval()
+        prepareForDataRetrieval(savedInstanceState)
+
         return binding.root
     }
 
-    private fun prepareForDataRetrieval() {
-        setUpAgentMenu()
-        setUpResultMenu()
+    private fun prepareForDataRetrieval(savedInstanceState: Bundle?) {
+        setUpAgentMenu(savedInstanceState)
+        setUpResultMenu(savedInstanceState)
         setUpCombatScoreInput()
         setUpKillsInput()
     }
 
-    private fun setUpAgentMenu() {
+    private fun setUpAgentMenu(savedInstanceState: Bundle?) {
+        savedInstanceState?.let { binding.agentMenu.setText(it.getString(AGENT_KEY)) }
         val agentAdapter =
             ArrayAdapter(requireContext(), R.layout.text_list_item, Agent.getAgentList())
         binding.agentMenu.setAdapter(agentAdapter)
     }
 
-    private fun setUpResultMenu() {
+    private fun setUpResultMenu(savedInstanceState: Bundle?) {
+        savedInstanceState?.let { binding.gameResultMenu.setText(it.getString(RESULT_KEY)) }
         val resultList = listOf(
             resources.getString(R.string.win),
             resources.getString(R.string.lose),
@@ -60,10 +66,20 @@ class GameEntryFragment : Fragment() {
 
     private fun makeErrorMessage(inputText: CharSequence?): String? {
         val isInvalidInput = inputText?.any { !it.isDigit() }
-        if (isInvalidInput == true) {
-            return getString(R.string.error_int)
+        return if (isInvalidInput == true) {
+            getString(R.string.error_int)
         } else {
-            return null
+            null
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        saveMenuTextsToBundle(outState)
+    }
+
+    private fun saveMenuTextsToBundle(outState: Bundle) {
+        outState.putString(AGENT_KEY, binding.agentMenu.text.toString())
+        outState.putString(RESULT_KEY, binding.gameResultMenu.text.toString())
     }
 }
