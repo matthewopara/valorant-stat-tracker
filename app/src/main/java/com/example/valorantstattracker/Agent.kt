@@ -26,4 +26,10 @@ object Agent {
     fun getImageResource(agentName: String): Int? {
         return avatars[agentName]
     }
+
+    fun getAgentList(): List<String> {
+        val agentList = listOf(BRIMSTONE, VIPER, OMEN, KILLJOY, CYPHER, SOVA, SAGE,
+            PHOENIX, JETT, REYNA, RAZE, BREACH, SKYE)
+        return agentList.sorted()
+    }
 }
