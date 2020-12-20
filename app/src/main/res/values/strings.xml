@@ -9,7 +9,6 @@
     <string name="result">Result</string>
     <string name="combat_score">Combat Score</string>
     <string name="kills">Kills</string>
-    <string name="error_int">An number is required</string>
     <string name="deaths">Deaths</string>
     <string name="assists">Assists</string>
     <string name="economy_rating">Economy Rating</string>
@@ -17,4 +16,8 @@
     <string name="plants">Plants</string>
     <string name="defuses">Defuses</string>
     <string name="confirm">Confirm</string>
+
+    <string name="error_number_required">An number is required</string>
+    <string name="error_input_required">Input is required</string>
+    <string name="invalid_data">Some of the data is invalid</string>
 </resources>
