@@ -7,4 +7,7 @@
     <string name="add_game_button_desc">New game</string>
     <string name="agent">Agent</string>
     <string name="result">Result</string>
+    <string name="combat_score">Combat Score</string>
+    <string name="kills">Kills</string>
+    <string name="error_int">An number is required</string>
 </resources>
