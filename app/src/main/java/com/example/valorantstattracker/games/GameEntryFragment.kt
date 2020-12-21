@@ -9,9 +9,12 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.ExposedDropDownMenu
+import com.example.valorantstattracker.GameResult
 import com.example.valorantstattracker.R
+import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.databinding.FragmentGameEntryBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -110,8 +113,9 @@ class GameEntryFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             } else {
-                // TODO: make a new game, insert it into the DB, and navigate to games fragment
-                Log.d("GameEntryFragment", "Save and Navigate")
+                val newGame = makeNewGame() ?: return@setOnClickListener
+                val action = GameEntryFragmentDirections.actionGameEntryToGames(newGame)
+                findNavController().navigate(action)
             }
         }
     }
@@ -133,6 +137,23 @@ class GameEntryFragment : Fragment() {
             }
         }
         return hasErrors
+    }
+
+    private fun makeNewGame(): Game? {
+        val gameResult =
+            GameResult.convertResultTextToInt(binding.gameResultMenu.text.toString(), resources)
+                ?: return null
+
+        return Game(result = gameResult,
+            agentName = binding.agentMenu.text.toString(),
+            combatScore = binding.combatScoreInput.text.toString().toInt(),
+            kills = binding.killsInput.text.toString().toInt(),
+            deaths = binding.deathsInput.text.toString().toInt(),
+            assists = binding.assistsInput.text.toString().toInt(),
+            econRating = binding.econRatingInput.text.toString().toInt(),
+            firstBloods = binding.firstBloodsInput.text.toString().toInt(),
+            plants = binding.plantsInput.text.toString().toInt(),
+            defuses = binding.defusesInput.text.toString().toInt())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

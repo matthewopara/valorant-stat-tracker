@@ -12,10 +12,19 @@
         <action
             android:id="@+id/action_games_to_gameEntry"
             app:destination="@id/gameEntryFragment" />
+        <argument
+            android:name="newGame"
+            app:argType="com.example.valorantstattracker.database.Game"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/gameEntryFragment"
         android:name="com.example.valorantstattracker.games.GameEntryFragment"
         android:label="fragment_game_entry"
-        tools:layout="@layout/fragment_game_entry" />
+        tools:layout="@layout/fragment_game_entry" >
+        <action
+            android:id="@+id/action_gameEntry_to_games"
+            app:destination="@id/gamesFragment" />
+    </fragment>
 </navigation>
