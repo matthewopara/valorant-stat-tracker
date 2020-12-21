@@ -1,9 +1,12 @@
 package com.example.valorantstattracker.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "game_table")
 data class Game(
     @PrimaryKey(autoGenerate = true)
@@ -33,4 +36,4 @@ data class Game(
 
     val plants: Int,
     val defuses: Int,
-)
+) : Parcelable
