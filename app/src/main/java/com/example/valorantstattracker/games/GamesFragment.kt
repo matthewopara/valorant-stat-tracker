@@ -63,7 +63,7 @@ class GamesFragment : Fragment() {
 
     private fun initRecyclerView() {
         gamesAdapter = GamesRecyclerAdapter(resources)
-        val decoration = GameItemDecoration(R.dimen.game_item_spacing)
+        val decoration = GameItemDecoration(resources.getDimension(R.dimen.game_item_spacing).toInt())
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@GamesFragment.context)
             addItemDecoration(decoration)
