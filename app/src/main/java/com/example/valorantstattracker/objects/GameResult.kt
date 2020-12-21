@@ -16,4 +16,13 @@ object GameResult {
             else -> null
         }
     }
+
+    fun convertIntToResultText(num: Int, resources: Resources): String? {
+        return when (num) {
+            WIN -> resources.getString(R.string.win)
+            LOSE -> resources.getString(R.string.lose)
+            DRAW -> resources.getString(R.string.draw)
+            else -> null
+        }
+    }
 }
