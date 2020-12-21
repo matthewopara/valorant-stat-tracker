@@ -17,4 +17,28 @@ class InputValidatorTest {
         val validation = InputValidator.isNumber("1f3D")
         assertFalse(validation)
     }
+
+    @Test
+    fun isAgentNameTrue() {
+        val validation = InputValidator.isAgentName(Agent.BREACH)
+        assertTrue(validation)
+    }
+
+    @Test
+    fun isAgentNameFalse() {
+        val validation = InputValidator.isAgentName("Scooby-Doo")
+        assertFalse(validation)
+    }
+
+    @Test
+    fun isGameResultTrue() {
+        val validation = InputValidator.isGameResult(GameResult.WIN)
+        assertTrue(validation)
+    }
+
+    @Test
+    fun isGameResultFalse() {
+        val validation = InputValidator.isGameResult(-495)
+        assertFalse(validation)
+    }
 }
