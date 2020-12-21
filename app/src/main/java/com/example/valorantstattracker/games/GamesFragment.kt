@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.valorantstattracker.Agent
 import com.example.valorantstattracker.GameResult
@@ -22,6 +23,7 @@ class GamesFragment : Fragment() {
     private lateinit var gamesViewModel: GamesViewModel
     private lateinit var gamesViewModelFactory: GamesViewModelFactory
     private lateinit var gamesAdapter: GamesRecyclerAdapter
+    private val args: GamesFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -30,29 +32,20 @@ class GamesFragment : Fragment() {
         gamesViewModel = ViewModelProvider(this, gamesViewModelFactory)
             .get(GamesViewModel::class.java)
 
-        // TODO: Remove this for loop after implementing FAB onClick
-//        for (i in 1..15) {
-//            gamesViewModel.createGame(makeGame(Agent.OMEN))
-//        }
+        // Inserts new game into database if one is received from GameEntryFragment
+        args.newGame?.let { newGame ->
+            gamesViewModel.createGame(newGame)
+        }
 
         initRecyclerView()
         displayGameHistory()
 
         binding.newGameButton.setOnClickListener {
-            // TODO: Open game entry fragment for game data entry
             val action = GamesFragmentDirections.actionGamesToGameEntry()
             findNavController().navigate(action)
-            Log.d("GamesFragment", "Enter Game Data")
         }
 
         return binding.root
-    }
-
-    // TODO: Remove this testing method after implementing FAB onClick
-    private fun makeGame(agentName: String): Game {
-        return Game(entryTimeMilli = 10, result = GameResult.WIN,
-            agentName = agentName, combatScore = 100, kills = 20, deaths = 20,
-            assists = 20, econRating = 30, firstBloods = 2, plants = 2, defuses = 1)
     }
 
     private fun createGamesViewModelFactory(): GamesViewModelFactory {

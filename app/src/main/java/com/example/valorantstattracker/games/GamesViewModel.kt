@@ -12,8 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GamesViewModel(
-        val gameDao: GameDao,
-        application: Application) : AndroidViewModel(application) {
+    private val gameDao: GameDao,
+    application: Application) : AndroidViewModel(application) {
 
     private val _searchResults = MutableLiveData(emptyList<Game>())
 
@@ -21,10 +21,15 @@ class GamesViewModel(
     val searchResults: LiveData<List<Game>>
         get() = _searchResults
 
+    private var lastEnteredTime: Long? = null
+
     fun createGame(game: Game)
     {
-        CoroutineScope(Dispatchers.IO).launch {
-            gameDao.insert(game)
+        if (game.entryTimeMilli != lastEnteredTime) {
+            lastEnteredTime = game.entryTimeMilli
+            CoroutineScope(Dispatchers.IO).launch {
+                gameDao.insert(game)
+            }
         }
     }
 
