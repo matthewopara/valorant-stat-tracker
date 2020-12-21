@@ -29,6 +29,13 @@ class GameEntryFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
 
         binding = FragmentGameEntryBinding.inflate(inflater)
+        prepareForDataRetrieval(savedInstanceState)
+        setUpConfirmButton()
+
+        return binding.root
+    }
+
+    private fun prepareForDataRetrieval(savedInstanceState: Bundle?) {
         dropdownMenus = listOf(binding.agentMenu, binding.gameResultMenu)
         textInputs = listOf(binding.combatScoreInput,
             binding.killsInput,
@@ -38,37 +45,6 @@ class GameEntryFragment : Fragment() {
             binding.firstBloodsInput,
             binding.plantsInput,
             binding.defusesInput)
-        prepareForDataRetrieval(savedInstanceState)
-
-        binding.confirmButton.setOnClickListener {
-            var hasInvalidInputs = false
-            for (menu in dropdownMenus) {
-                if (menu.text.toString().isEmpty()) {
-                    hasInvalidInputs = true
-                    menu.error = getString(R.string.error_input_required)
-                }
-            }
-            for (editText in textInputs) {
-                if (editText.error != null) {
-                    hasInvalidInputs = true
-                } else if (editText.text.toString().isEmpty()) {
-                    hasInvalidInputs = true
-                    editText.error = getString(R.string.error_input_required)
-                }
-            }
-
-            if (hasInvalidInputs) {
-                val snackbar = Snackbar.make(binding.coordinatorLayout, getString(R.string.invalid_data), Snackbar.LENGTH_SHORT)
-                snackbar.show()
-            } else {
-                // TODO: make a new game, insert it into the DB, and navigate to games fragment
-                Log.d("GameEntryFragment", "Save and Navigate")
-            }
-        }
-        return binding.root
-    }
-
-    private fun prepareForDataRetrieval(savedInstanceState: Bundle?) {
         setUpAgentMenu(savedInstanceState)
         setUpResultMenu(savedInstanceState)
         for (editText in textInputs) {
@@ -121,6 +97,42 @@ class GameEntryFragment : Fragment() {
                 null
             }
         }
+    }
+
+    private fun setUpConfirmButton() {
+        binding.confirmButton.setOnClickListener {
+            val hasInvalidInputs = displayAnyInputErrors()
+
+            if (hasInvalidInputs) {
+                Snackbar.make(
+                    binding.coordinatorLayout,
+                    getString(R.string.invalid_data),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                // TODO: make a new game, insert it into the DB, and navigate to games fragment
+                Log.d("GameEntryFragment", "Save and Navigate")
+            }
+        }
+    }
+
+    private fun displayAnyInputErrors(): Boolean {
+        var hasErrors = false
+        for (menu in dropdownMenus) {
+            if (menu.text.toString().isEmpty()) {
+                hasErrors = true
+                menu.error = getString(R.string.error_input_required)
+            }
+        }
+        for (editText in textInputs) {
+            if (editText.error != null) {
+                hasErrors = true
+            } else if (editText.text.toString().isEmpty()) {
+                hasErrors = true
+                editText.error = getString(R.string.error_input_required)
+            }
+        }
+        return hasErrors
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
