@@ -32,13 +32,19 @@ class GameEntryFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
 
         binding = FragmentGameEntryBinding.inflate(inflater)
-        prepareForDataRetrieval(savedInstanceState)
+        fillInputsWithSavedBundle(savedInstanceState)
+        prepareForDataRetrieval()
         setUpConfirmButton()
 
         return binding.root
     }
 
-    private fun prepareForDataRetrieval(savedInstanceState: Bundle?) {
+    private fun fillInputsWithSavedBundle(savedInstanceState: Bundle?) {
+        savedInstanceState?.let { binding.agentMenu.setText(it.getString(AGENT_KEY)) }
+        savedInstanceState?.let { binding.gameResultMenu.setText(it.getString(RESULT_KEY)) }
+    }
+
+    private fun prepareForDataRetrieval() {
         dropdownMenus = listOf(binding.agentMenu, binding.gameResultMenu)
         textInputs = listOf(binding.combatScoreInput,
             binding.killsInput,
@@ -48,15 +54,14 @@ class GameEntryFragment : Fragment() {
             binding.firstBloodsInput,
             binding.plantsInput,
             binding.defusesInput)
-        setUpAgentMenu(savedInstanceState)
-        setUpResultMenu(savedInstanceState)
+        setUpAgentMenu()
+        setUpResultMenu()
         for (editText in textInputs) {
             setUpTextInput(editText)
         }
     }
 
-    private fun setUpAgentMenu(savedInstanceState: Bundle?) {
-        savedInstanceState?.let { binding.agentMenu.setText(it.getString(AGENT_KEY)) }
+    private fun setUpAgentMenu() {
         val agentAdapter =
             ArrayAdapter(requireContext(), R.layout.text_list_item, Agent.getAgentList())
         binding.agentMenu.setAdapter(agentAdapter)
@@ -65,8 +70,7 @@ class GameEntryFragment : Fragment() {
         }
     }
 
-    private fun setUpResultMenu(savedInstanceState: Bundle?) {
-        savedInstanceState?.let { binding.gameResultMenu.setText(it.getString(RESULT_KEY)) }
+    private fun setUpResultMenu() {
         val resultList = listOf(
             resources.getString(R.string.win),
             resources.getString(R.string.lose),
