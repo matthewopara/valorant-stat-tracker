@@ -1,6 +1,7 @@
-package com.example.valorantstattracker
+package com.example.valorantstattracker.objects
 
 import android.content.res.Resources
+import com.example.valorantstattracker.R
 
 object GameResult {
     const val WIN: Int = 0

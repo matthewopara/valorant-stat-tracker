@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.valorantstattracker.GameResult
+import com.example.valorantstattracker.objects.GameResult
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDao
 import kotlinx.coroutines.CoroutineScope

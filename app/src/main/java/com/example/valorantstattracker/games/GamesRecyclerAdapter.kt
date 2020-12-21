@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.valorantstattracker.Agent
-import com.example.valorantstattracker.GameResult
+import com.example.valorantstattracker.objects.Agent
+import com.example.valorantstattracker.objects.GameResult
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.databinding.GameListItemBinding

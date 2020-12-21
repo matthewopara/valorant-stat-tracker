@@ -1,7 +1,6 @@
 package com.example.valorantstattracker.games
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.valorantstattracker.Agent
-import com.example.valorantstattracker.GameResult
 import com.example.valorantstattracker.R
-import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGamesBinding
 

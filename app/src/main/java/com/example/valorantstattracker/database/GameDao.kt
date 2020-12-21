@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.valorantstattracker.GameResult
+import com.example.valorantstattracker.objects.GameResult
 
 @Dao
 interface GameDao {

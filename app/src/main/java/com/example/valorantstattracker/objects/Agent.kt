@@ -1,4 +1,6 @@
-package com.example.valorantstattracker
+package com.example.valorantstattracker.objects
+
+import com.example.valorantstattracker.R
 
 object Agent {
     const val BRIMSTONE = "Brimstone"
@@ -15,21 +17,25 @@ object Agent {
     const val BREACH = "Breach"
     const val SKYE = "Skye"
 
-    private val avatars = mapOf(BRIMSTONE to R.drawable.brimstone_avatar, VIPER to R.drawable.viper_avatar,
+    private val avatars = mapOf(
+        BRIMSTONE to R.drawable.brimstone_avatar, VIPER to R.drawable.viper_avatar,
             OMEN to R.drawable.omen_avatar, KILLJOY to R.drawable.killjoy_avatar,
             CYPHER to R.drawable.cypher_avatar, SOVA to R.drawable.sova_avatar,
             SAGE to R.drawable.sage_avatar, PHOENIX to R.drawable.phoenix_avatar,
             JETT to R.drawable.jett_avatar, REYNA to R.drawable.reyna_avatar,
             RAZE to R.drawable.raze_avatar, BREACH to R.drawable.breach_avatar,
-            SKYE to R.drawable.skye_avatar)
+            SKYE to R.drawable.skye_avatar
+    )
 
     fun getImageResource(agentName: String): Int? {
         return avatars[agentName]
     }
 
     fun getAgentList(): List<String> {
-        val agentList = listOf(BRIMSTONE, VIPER, OMEN, KILLJOY, CYPHER, SOVA, SAGE,
-            PHOENIX, JETT, REYNA, RAZE, BREACH, SKYE)
+        val agentList = listOf(
+            BRIMSTONE, VIPER, OMEN, KILLJOY, CYPHER, SOVA, SAGE,
+            PHOENIX, JETT, REYNA, RAZE, BREACH, SKYE
+        )
         return agentList.sorted()
     }
 }
