@@ -8,7 +8,7 @@ object GameResult {
     const val LOSE: Int = 1
     const val  DRAW: Int = 2
 
-    fun convertResultTextToInt(result: String, resources: Resources): Int? {
+    fun convertResultStringToInt(result: String, resources: Resources): Int? {
         return when (result) {
             resources.getString(R.string.win) -> WIN
             resources.getString(R.string.lose) -> LOSE
@@ -17,7 +17,7 @@ object GameResult {
         }
     }
 
-    fun convertIntToResultText(num: Int, resources: Resources): String? {
+    fun convertIntToResultString(num: Int, resources: Resources): String? {
         return when (num) {
             WIN -> resources.getString(R.string.win)
             LOSE -> resources.getString(R.string.lose)

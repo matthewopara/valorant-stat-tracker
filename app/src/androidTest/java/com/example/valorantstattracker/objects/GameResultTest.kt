@@ -25,25 +25,25 @@ class GameResultTest {
 
     @Test
     fun convertValidResultTextToInt() {
-        val resultInt = GameResult.convertResultTextToInt("Win", resources)
+        val resultInt = GameResult.convertResultStringToInt("Win", resources)
         assertEquals(GameResult.WIN, resultInt)
     }
 
     @Test
     fun convertinValidResultTextToInt() {
-        val resultInt = GameResult.convertResultTextToInt("Hello", resources)
+        val resultInt = GameResult.convertResultStringToInt("Hello", resources)
         assertNull(resultInt)
     }
 
     @Test
     fun convertValidIntToResultText() {
-        val resultString = GameResult.convertIntToResultText(GameResult.WIN, resources)
+        val resultString = GameResult.convertIntToResultString(GameResult.WIN, resources)
         assertEquals(resources.getString(R.string.win), resultString)
     }
 
     @Test
     fun convertinvalidIntToResultText() {
-        val resultString = GameResult.convertIntToResultText(42, resources)
+        val resultString = GameResult.convertIntToResultString(42, resources)
         assertNull(resultString)
     }
 }

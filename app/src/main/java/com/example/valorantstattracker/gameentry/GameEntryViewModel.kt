@@ -75,7 +75,7 @@ class GameEntryViewModel(private val gameDao: GameDao,
 
     fun setGameResult(input: String) {
         inputHolder.gameResultInput = input
-        val gameResultInt = GameResult.convertResultTextToInt(input, resources)
+        val gameResultInt = GameResult.convertResultStringToInt(input, resources)
         _gameResultIsValid.value = InputValidator.isGameResult(gameResultInt)
     }
 
@@ -142,7 +142,7 @@ class GameEntryViewModel(private val gameDao: GameDao,
             _agentNameIsValid.value = false
         }
 
-        val gameResultInt = GameResult.convertResultTextToInt(
+        val gameResultInt = GameResult.convertResultStringToInt(
             inputHolder.gameResultInput,
             resources
         )
@@ -196,7 +196,7 @@ class GameEntryViewModel(private val gameDao: GameDao,
 
     private fun makeGameFromInputs(): Game {
         return Game(
-            result = GameResult.convertResultTextToInt(inputHolder.gameResultInput, resources)!!,
+            result = GameResult.convertResultStringToInt(inputHolder.gameResultInput, resources)!!,
             agentName = inputHolder.agentNameInput,
             combatScore = inputHolder.combatScoreInput.toInt(),
             kills = inputHolder.killsInput.toInt(),
