@@ -19,7 +19,6 @@ class GamesFragment : Fragment() {
     private lateinit var gamesViewModel: GamesViewModel
     private lateinit var gamesViewModelFactory: GamesViewModelFactory
     private lateinit var gamesAdapter: GamesRecyclerAdapter
-    private val args: GamesFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -27,11 +26,6 @@ class GamesFragment : Fragment() {
         gamesViewModelFactory = createGamesViewModelFactory()
         gamesViewModel = ViewModelProvider(this, gamesViewModelFactory)
             .get(GamesViewModel::class.java)
-
-        // Inserts new game into database if one is received from GameEntryFragment
-        args.newGame?.let { newGame ->
-            gamesViewModel.createGame(newGame)
-        }
 
         initRecyclerView()
         displayGameHistory()
