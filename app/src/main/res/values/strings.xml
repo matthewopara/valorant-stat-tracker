@@ -17,7 +17,7 @@
     <string name="defuses">Defuses</string>
     <string name="confirm">Confirm</string>
 
-    <string name="error_number_required">An number is required</string>
+    <string name="error_number_required">A number is required</string>
     <string name="error_input_required">Input is required</string>
     <string name="invalid_data">Some of the data is invalid</string>
 </resources>
