@@ -2,7 +2,7 @@ package com.example.valorantstattracker.input
 
 data class InputHolder(
     var agentNameInput: String = "",
-    var gameResultInput: String = "",
+    var gameResultInput: Int = -1,
     var combatScoreInput: String = "",
     var killsInput: String = "",
     var deathsInput: String = "",
