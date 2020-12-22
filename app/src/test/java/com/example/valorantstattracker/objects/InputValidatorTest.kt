@@ -1,5 +1,6 @@
 package com.example.valorantstattracker.objects
 
+import com.example.valorantstattracker.input.InputValidator
 import org.junit.Test
 
 import org.junit.Assert.*

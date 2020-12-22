@@ -4,11 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.valorantstattracker.InputHolder
+import com.example.valorantstattracker.input.InputHolder
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDao
 import com.example.valorantstattracker.objects.GameResult
-import com.example.valorantstattracker.objects.InputValidator
+import com.example.valorantstattracker.input.InputValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,7 @@
-package com.example.valorantstattracker.objects
+package com.example.valorantstattracker.input
+
+import com.example.valorantstattracker.objects.Agent
+import com.example.valorantstattracker.objects.GameResult
 
 object InputValidator {
     fun isNumber(input: String): Boolean {

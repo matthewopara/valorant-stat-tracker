@@ -1,4 +1,4 @@
-package com.example.valorantstattracker
+package com.example.valorantstattracker.input
 
 data class InputHolder(
     var agentNameInput: String = "",
