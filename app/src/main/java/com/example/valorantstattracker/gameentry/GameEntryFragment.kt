@@ -1,11 +1,10 @@
-package com.example.valorantstattracker.games
+package com.example.valorantstattracker.gameentry
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -105,8 +104,8 @@ class GameEntryFragment : Fragment() {
         val agentAdapter =
             ArrayAdapter(requireContext(), R.layout.text_list_item, Agent.getAgentList())
         binding.agentMenu.setAdapter(agentAdapter)
-        binding.agentMenu.doAfterTextChanged {
-            gameEntryViewModel.setAgentName(it.toString())
+        binding.agentMenu.doOnTextChanged { inputText, _, _, _ ->
+            gameEntryViewModel.setAgentName(inputText.toString())
         }
         gameEntryViewModel.agentNameIsValid.observe(viewLifecycleOwner, { isValid ->
             if (isValid) {
@@ -125,8 +124,8 @@ class GameEntryFragment : Fragment() {
         )
         val resultAdapter = ArrayAdapter(requireContext(), R.layout.text_list_item, resultList)
         binding.gameResultMenu.setAdapter(resultAdapter)
-        binding.gameResultMenu.doAfterTextChanged {
-            gameEntryViewModel.setGameResult(it.toString())
+        binding.gameResultMenu.doOnTextChanged { inputText, _, _, _ ->
+            gameEntryViewModel.setGameResult(inputText.toString())
         }
         gameEntryViewModel.gameResultIsValid.observe(viewLifecycleOwner, { isValid ->
             if (isValid) {
@@ -138,7 +137,7 @@ class GameEntryFragment : Fragment() {
     }
 
     private fun setUpTextInput(editText: TextInputEditText) {
-        editText.doAfterTextChanged { inputText ->
+        editText.doOnTextChanged { inputText, _, _ ,_ ->
             textInputSetters[editText]?.let { setTextInViewModel ->
                 setTextInViewModel(inputText.toString())
             }

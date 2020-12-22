@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameEntryFragment"
-        android:name="com.example.valorantstattracker.games.GameEntryFragment"
+        android:name="com.example.valorantstattracker.gameentry.GameEntryFragment"
         android:label="fragment_game_entry"
         tools:layout="@layout/fragment_game_entry" >
         <action

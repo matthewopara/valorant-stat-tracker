@@ -1,4 +1,4 @@
-package com.example.valorantstattracker.games
+package com.example.valorantstattracker.gameentry
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
