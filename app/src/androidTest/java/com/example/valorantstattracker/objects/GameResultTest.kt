@@ -19,10 +19,6 @@ class GameResultTest {
         resources = ApplicationProvider.getApplicationContext<Application>().resources
     }
 
-    @After
-    fun tearDown() {
-    }
-
     @Test
     fun convertValidResultTextToInt() {
         val resultInt = GameResult.convertResultStringToInt("Win", resources)

@@ -1,12 +1,9 @@
-package com.example.valorantstattracker
+package com.example.valorantstattracker.database
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.valorantstattracker.database.Game
-import com.example.valorantstattracker.database.GameDao
-import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.objects.Agent
 import com.example.valorantstattracker.objects.GameResult
 import kotlinx.coroutines.CoroutineScope
