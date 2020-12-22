@@ -5,60 +5,65 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.valorantstattracker.InputHolder
+import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDao
 import com.example.valorantstattracker.objects.GameResult
 import com.example.valorantstattracker.objects.InputValidator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class GameEntryViewModel(private val gameDao: GameDao,
                          application: Application) : AndroidViewModel(application) {
 
-    val inputHolder = InputHolder()
+    private val resources = application.resources
+    private val inputHolder = InputHolder()
 
-    val _agentNameIsValid = MutableLiveData(true)
+    private val _agentNameIsValid = MutableLiveData(true)
     val agentNameIsValid: LiveData<Boolean>
         get() = _agentNameIsValid
 
-    val _gameResultIsValid = MutableLiveData(true)
+    private val _gameResultIsValid = MutableLiveData(true)
     val gameResultIsValid: LiveData<Boolean>
         get() = _gameResultIsValid
 
-    val _combatScoreIsValid = MutableLiveData(true)
+    private val _combatScoreIsValid = MutableLiveData(true)
     val combatScoreIsValid: LiveData<Boolean>
         get() = _combatScoreIsValid
 
-    val _killsIsValid = MutableLiveData(true)
+    private val _killsIsValid = MutableLiveData(true)
     val killsIsValid: LiveData<Boolean>
         get() = _killsIsValid
 
-    val _deathsIsValid = MutableLiveData(true)
+    private val _deathsIsValid = MutableLiveData(true)
     val deathsIsValid: LiveData<Boolean>
         get() = _deathsIsValid
 
-    val _assistsIsValid = MutableLiveData(true)
+    private val _assistsIsValid = MutableLiveData(true)
     val assistsIsValid: LiveData<Boolean>
         get() = _assistsIsValid
 
-    val _econRatingIsValid = MutableLiveData(true)
+    private val _econRatingIsValid = MutableLiveData(true)
     val econRatingIsValid: LiveData<Boolean>
         get() = _econRatingIsValid
 
-    val _firstBloodsIsValid = MutableLiveData(true)
+    private val _firstBloodsIsValid = MutableLiveData(true)
     val firstBloodsIsValid: LiveData<Boolean>
         get() = _firstBloodsIsValid
 
-    val _plantsIsValid = MutableLiveData(true)
+    private val _plantsIsValid = MutableLiveData(true)
     val plantsIsValid: LiveData<Boolean>
         get() = _plantsIsValid
 
-    val _defusesIsValid = MutableLiveData(true)
+    private val _defusesIsValid = MutableLiveData(true)
     val defusesIsValid: LiveData<Boolean>
         get() = _defusesIsValid
 
-    val _showSnackbarError = MutableLiveData(false)
+    private val _showSnackbarError = MutableLiveData(false)
     val showSnackbarError: LiveData<Boolean>
         get() = _showSnackbarError
 
-    val _navigateToGamesFragment = MutableLiveData(false)
+    private val _navigateToGamesFragment = MutableLiveData(false)
     val navigateToGamesFragment: LiveData<Boolean>
         get() = _navigateToGamesFragment
 
@@ -70,7 +75,7 @@ class GameEntryViewModel(private val gameDao: GameDao,
 
     fun setGameResult(input: String) {
         inputHolder.gameResultInput = input
-        val gameResultInt = GameResult.convertResultTextToInt(input, getApplication<Application>().resources)
+        val gameResultInt = GameResult.convertResultTextToInt(input, resources)
         _gameResultIsValid.value = InputValidator.isGameResult(gameResultInt)
     }
 
@@ -114,9 +119,15 @@ class GameEntryViewModel(private val gameDao: GameDao,
         _defusesIsValid.value = InputValidator.isNumber(input)
     }
 
+    fun getAgentName(): String = inputHolder.agentNameInput
+    fun getGameResult(): String = inputHolder.gameResultInput
+
     fun attemptConfirmation() {
         if (validateAllInputs()) {
-            // TODO: navigate
+            val newGame = makeGameFromInputs()
+            CoroutineScope(Dispatchers.IO).launch {
+                gameDao.insert(newGame)
+            }
             _navigateToGamesFragment.value = true
         } else {
             _showSnackbarError.value = true
@@ -133,7 +144,7 @@ class GameEntryViewModel(private val gameDao: GameDao,
 
         val gameResultInt = GameResult.convertResultTextToInt(
             inputHolder.gameResultInput,
-            getApplication<Application>().resources
+            resources
         )
         if (!InputValidator.isGameResult(gameResultInt)) {
             allInputsAreValid = false
@@ -181,6 +192,21 @@ class GameEntryViewModel(private val gameDao: GameDao,
         }
 
         return allInputsAreValid
+    }
+
+    private fun makeGameFromInputs(): Game {
+        return Game(
+            result = GameResult.convertResultTextToInt(inputHolder.gameResultInput, resources)!!,
+            agentName = inputHolder.agentNameInput,
+            combatScore = inputHolder.combatScoreInput.toInt(),
+            kills = inputHolder.killsInput.toInt(),
+            deaths = inputHolder.deathsInput.toInt(),
+            assists = inputHolder.assistsInput.toInt(),
+            econRating = inputHolder.econRatingInput.toInt(),
+            firstBloods = inputHolder.firstBloodsInput.toInt(),
+            plants = inputHolder.plantsInput.toInt(),
+            defuses = inputHolder.defusesInput.toInt()
+        )
     }
 
     fun showSnackbarErrorComplete() {
