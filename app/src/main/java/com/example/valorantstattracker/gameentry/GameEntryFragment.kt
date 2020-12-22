@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.valorantstattracker.objects.Agent
 import com.example.valorantstattracker.ExposedDropDownMenu
@@ -16,6 +17,7 @@ import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGameEntryBinding
+import com.example.valorantstattracker.games.GamesViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
@@ -38,9 +40,10 @@ class GameEntryFragment : Fragment() {
 
         //fillInputsWithSavedBundle(savedInstanceState)
 
-        val application = requireNotNull(activity).application
-        val dataSource = GameDatabase.getInstance(application).getGameDao()
-        gameEntryViewModel = GameEntryViewModel(dataSource, application)
+        val gameEntryViewModelFactory = createGameEntryViewModelFactory()
+        gameEntryViewModel = ViewModelProvider(this, gameEntryViewModelFactory)
+            .get(GameEntryViewModel::class.java)
+
 
 
         textInputSetters = mapOf(binding.combatScoreInput to fun (inputText: String) { gameEntryViewModel.setCombatScore(inputText) },
@@ -68,6 +71,12 @@ class GameEntryFragment : Fragment() {
         setUpConfirmButton()
 
         return binding.root
+    }
+
+    private fun createGameEntryViewModelFactory(): GameEntryViewModelFactory {
+        val application = requireNotNull(activity).application
+        val dataSource = GameDatabase.getInstance(application).getGameDao()
+        return GameEntryViewModelFactory(dataSource, application)
     }
 
     private fun fillInputsWithSavedBundle(savedInstanceState: Bundle?) {
@@ -101,6 +110,7 @@ class GameEntryFragment : Fragment() {
     }
 
     private fun setUpAgentMenu() {
+        binding.agentMenu.setText(gameEntryViewModel.getAgentName())
         val agentAdapter =
             ArrayAdapter(requireContext(), R.layout.text_list_item, Agent.getAgentList())
         binding.agentMenu.setAdapter(agentAdapter)
@@ -117,6 +127,7 @@ class GameEntryFragment : Fragment() {
     }
 
     private fun setUpResultMenu() {
+        binding.gameResultMenu.setText(gameEntryViewModel.getGameResult())
         val resultList = listOf(
             resources.getString(R.string.win),
             resources.getString(R.string.lose),
