@@ -9,14 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.valorantstattracker.ItemClickListener
-import com.example.valorantstattracker.ItemLongClickListener
+import com.example.valorantstattracker.gamesrecyclerview.ClickableGameViewHolderFactory
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGamesBinding
+import com.example.valorantstattracker.gamesrecyclerview.GamesRecyclerAdapter
 
-class GamesFragment : Fragment(), ItemClickListener, ItemLongClickListener {
+class GamesFragment : Fragment() {
 
     private lateinit var binding: FragmentGamesBinding
     private lateinit var gamesViewModel: GamesViewModel
@@ -49,21 +49,18 @@ class GamesFragment : Fragment(), ItemClickListener, ItemLongClickListener {
     }
 
     private fun initRecyclerView() {
-        gamesAdapter = GamesRecyclerAdapter(resources, this, this)
+        val viewHolderFactory = ClickableGameViewHolderFactory(resources)
+        // TODO: set on click listeners
+        //  (How will you set the visibility of the selection bar when its time to turn it on?)
+        viewHolderFactory.setOnClickCallback { view, position -> Log.d("HelloWorld", "Hello There :)") }
+        viewHolderFactory.setOnLongClickCallback { view, position -> Log.d("HelloWorld", "Greetings :P") }
+        gamesAdapter = GamesRecyclerAdapter(viewHolderFactory)
         val decoration = GameItemDecoration(resources.getDimension(R.dimen.game_item_spacing).toInt())
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@GamesFragment.context)
             addItemDecoration(decoration)
             adapter = gamesAdapter
         }
-    }
-
-    override fun onItemClick(view: View, position: Int) {
-        Log.d("GamesFragment", "Agent Name Clicked: ${gameHistory?.get(position)?.agentName}")
-    }
-
-    override fun onItemLongClick(view: View, position: Int) {
-        Log.d("GamesFragment", "Game Kills Long Clicked: ${gameHistory?.get(position)?.kills}")
     }
 
     private fun displayGameHistory() {
