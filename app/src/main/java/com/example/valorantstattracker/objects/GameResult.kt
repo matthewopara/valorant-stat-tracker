@@ -1,6 +1,7 @@
 package com.example.valorantstattracker.objects
 
 import android.content.res.Resources
+import android.graphics.Color
 import com.example.valorantstattracker.R
 
 object GameResult {
@@ -23,6 +24,15 @@ object GameResult {
             LOSE -> resources.getString(R.string.lose)
             DRAW -> resources.getString(R.string.draw)
             else -> null
+        }
+    }
+
+    fun getGameResultColor(result: Int): Int {
+        return when (result) {
+            WIN -> Color.GREEN
+            LOSE -> Color.RED
+            DRAW -> Color.GRAY
+            else -> Color.BLACK
         }
     }
 }
