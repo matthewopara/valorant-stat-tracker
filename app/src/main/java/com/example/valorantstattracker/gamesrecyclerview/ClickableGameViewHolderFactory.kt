@@ -6,8 +6,8 @@ import com.example.valorantstattracker.databinding.GameListItemBinding
 
 class ClickableGameViewHolderFactory(private val resources: Resources) : GameViewHolderFactory {
 
-    private var clickCalllback: (view: View, position: Int) -> Unit = { _, _ -> }
-    private var longClickCallback: (view: View, position: Int) -> Unit = { _, _ -> }
+    private var clickCalllback: (binding: GameListItemBinding, position: Int) -> Unit = { _, _ -> }
+    private var longClickCallback: (binding: GameListItemBinding, position: Int) -> Unit = { _, _ -> }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : GameViewHolder> create(modelClass: Class<T>, binding: GameListItemBinding): T {
@@ -20,11 +20,11 @@ class ClickableGameViewHolderFactory(private val resources: Resources) : GameVie
         throw IllegalArgumentException("Unknown GameViewHolder class")
     }
 
-    fun setOnClickCallback(callback: (view: View, position: Int) -> Unit) {
+    fun setOnClickCallback(callback: (binding: GameListItemBinding, position: Int) -> Unit) {
         clickCalllback = callback
     }
 
-    fun setOnLongClickCallback(callback: (view: View, position: Int) -> Unit) {
+    fun setOnLongClickCallback(callback: (binding: GameListItemBinding, position: Int) -> Unit) {
         longClickCallback = callback
     }
 

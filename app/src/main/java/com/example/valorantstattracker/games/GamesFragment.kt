@@ -52,8 +52,8 @@ class GamesFragment : Fragment() {
         val viewHolderFactory = ClickableGameViewHolderFactory(resources)
         // TODO: set on click listeners
         //  (How will you set the visibility of the selection bar when its time to turn it on?)
-        viewHolderFactory.setOnClickCallback { view, position -> Log.d("HelloWorld", "Hello There :)") }
-        viewHolderFactory.setOnLongClickCallback { view, position -> Log.d("HelloWorld", "Greetings :P") }
+        viewHolderFactory.setOnClickCallback { binding, position -> Log.d("HelloWorld", "Hello There :)") }
+        viewHolderFactory.setOnLongClickCallback { binding, position -> Log.d("HelloWorld", "Greetings :P") }
         gamesAdapter = GamesRecyclerAdapter(viewHolderFactory)
         val decoration = GameItemDecoration(resources.getDimension(R.dimen.game_item_spacing).toInt())
         binding.recyclerView.apply {
