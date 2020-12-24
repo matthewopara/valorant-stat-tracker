@@ -55,14 +55,21 @@ class GamesViewModel(
     private fun changeItemSelectState(index: Int) {
         val clickedGame = _allGames[index]
         if (clickedGame.isSelected) {
-            clickedGame.isSelected = false
-            _gameItemUpdatedIndex.value = index
-            numOfSelectedItems--
+            unSelectGameItem(clickedGame)
         } else {
-            clickedGame.isSelected = true
-            _gameItemUpdatedIndex.value = index
-            numOfSelectedItems++
+            selectGameItem(clickedGame)
         }
+        _gameItemUpdatedIndex.value = index
+    }
+
+    private fun unSelectGameItem(gameListItem: GameListItem) {
+        gameListItem.isSelected = false
+        numOfSelectedItems--
+    }
+
+    private fun selectGameItem(gameListItem: GameListItem) {
+        gameListItem.isSelected = true
+        numOfSelectedItems++
     }
 
     fun allGamesUpdatedComplete() {
@@ -72,7 +79,7 @@ class GamesViewModel(
     private fun updateAllGames() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _allGames = GameListItem.createGameItemList(gameDao.getEveryGame()).toMutableList()
+                _allGames = GameListItem.createGameItemList(gameDao.getAllGames()).toMutableList()
                 _allGamesUpdated.postValue(true)
             }
         }

@@ -23,10 +23,7 @@ interface GameDao {
     suspend fun getGame(id: Long): Game?
 
     @Query("SELECT * FROM game_table ORDER BY game_id DESC")
-    fun getAllGames(): LiveData<List<Game>>
-
-    @Query("SELECT * FROM game_table ORDER BY game_id DESC")
-    fun getEveryGame(): List<Game>
+    fun getAllGames(): List<Game>
 
     @Query("SELECT * FROM game_table ORDER BY game_id DESC LIMIT :x")
     suspend fun getLastXGames(x: Int): List<Game>
