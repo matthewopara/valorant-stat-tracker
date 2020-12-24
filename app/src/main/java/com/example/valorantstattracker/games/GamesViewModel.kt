@@ -21,7 +21,7 @@ class GamesViewModel(
 
     private val _searchResults = MutableLiveData(emptyList<Game>())
 
-    private var _allGames = mutableListOf<GameListItem>()
+    private var _allGames = listOf<GameListItem>()
     val allGames: List<GameListItem>
         get() = _allGames
 
@@ -79,7 +79,7 @@ class GamesViewModel(
     private fun updateAllGames() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _allGames = GameListItem.createGameItemList(gameDao.getAllGames()).toMutableList()
+                _allGames = GameListItem.createGameItemList(gameDao.getAllGames())
                 _allGamesUpdated.postValue(true)
             }
         }
