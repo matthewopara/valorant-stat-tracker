@@ -28,31 +28,17 @@ class GamesRecyclerAdapter(private val factory: GameViewHolderFactory) :
     }
 
     fun submitList(newGamesList: List<GameListItem>) {
-        val oldGamesList = gameListItems
-        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(
-            GameItemDiffCallback(
-                oldGamesList,
-                newGamesList
-            )
-        )
+        val diffResult = generateDiffResult(gameListItems, newGamesList)
         gameListItems = newGamesList
         diffResult.dispatchUpdatesTo(this)
     }
 
-    private class GameItemDiffCallback(
-        val oldGameList: List<GameListItem>,
-        val newGameList: List<GameListItem>
-    ): DiffUtil.Callback() {
-        override fun getOldListSize(): Int = oldGameList.size
-
-        override fun getNewListSize(): Int = newGameList.size
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldGameList[oldItemPosition].game.gameId == newGameList[newItemPosition].game.gameId
-        }
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldGameList[oldItemPosition] == newGameList[newItemPosition]
-        }
+    private fun generateDiffResult(
+        oldList: List<GameListItem>,
+        newList: List<GameListItem>
+    ): DiffUtil.DiffResult {
+        val diffCallback = GameItemDiffCallback(oldList, newList)
+        return DiffUtil.calculateDiff(diffCallback)
     }
+
 }
