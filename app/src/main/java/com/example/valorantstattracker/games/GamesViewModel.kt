@@ -103,9 +103,14 @@ class GamesViewModel(
         }
     }
 
-    fun deleteGame(game: Game) {
+    fun deleteSelectedGames() {
         CoroutineScope(Dispatchers.IO).launch {
-            gameDao.delete(game)
+            _allGames.forEach {
+                if (it.isSelected) {
+                    gameDao.delete(it.game)
+                }
+            }
+            updateAllGames()
         }
     }
 
