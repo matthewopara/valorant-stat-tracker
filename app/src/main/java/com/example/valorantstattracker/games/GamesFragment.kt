@@ -60,8 +60,8 @@ class GamesFragment : Fragment() {
 
     private fun createViewHolderFactory(): GameViewHolderFactory {
         val viewHolderFactory = ClickableGameViewHolderFactory(resources)
-        viewHolderFactory.setOnClickCallback { binding, position -> gamesViewModel.gameItemClicked(position) }
-        viewHolderFactory.setOnLongClickCallback { binding, position -> gamesViewModel.gameItemLongClicked(position) }
+        viewHolderFactory.setOnClickCallback { _, position -> gamesViewModel.gameItemClicked(position) }
+        viewHolderFactory.setOnLongClickCallback { _, position -> gamesViewModel.gameItemLongClicked(position) }
         return viewHolderFactory
     }
 
