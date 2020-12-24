@@ -4,12 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.valorantstattracker.GameListItem
 import com.example.valorantstattracker.objects.GameResult
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GamesViewModel(
     private val gameDao: GameDao,
@@ -17,7 +20,36 @@ class GamesViewModel(
 
     private val _searchResults = MutableLiveData(emptyList<Game>())
 
-    val gameHistory = gameDao.getAllGames()
+    //val gameHistory = gameDao.getAllGames()
+
+    private var _allGames = mutableListOf<GameListItem>()
+    val allGames: List<GameListItem>
+        get() = _allGames
+
+    private val _allGamesUpdated = MutableLiveData(false)
+    val allGamesUpdated: LiveData<Boolean>
+        get() = _allGamesUpdated
+
+    init {
+        updateAllGames()
+    }
+
+    fun allGamesUpdatedComplete() {
+        _allGamesUpdated.value = false
+    }
+
+    private fun updateAllGames() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _allGames = GameListItem.createGameItemList(gameDao.getEveryGame()).toMutableList()
+                _allGamesUpdated.postValue(true)
+            }
+        }
+    }
+
+
+
+
     val searchResults: LiveData<List<Game>>
         get() = _searchResults
 

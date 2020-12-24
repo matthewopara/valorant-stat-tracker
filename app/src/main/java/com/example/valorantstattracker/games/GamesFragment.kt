@@ -64,10 +64,18 @@ class GamesFragment : Fragment() {
     }
 
     private fun displayGameHistory() {
-        gamesViewModel.gameHistory.observe(viewLifecycleOwner, { gameHistory ->
-            this.gameHistory = gameHistory
-            gamesAdapter.submitList(gameHistory)
-            binding.recyclerView.adapter = gamesAdapter
+        gamesViewModel.allGamesUpdated.observe(viewLifecycleOwner, { updated ->
+            if (updated) {
+                gamesViewModel.allGamesUpdatedComplete()
+                gamesAdapter.submitList(gamesViewModel.allGames)
+                // TODO: Is this next line necessary?
+                binding.recyclerView.adapter = gamesAdapter
+            }
         })
+//        gamesViewModel.gameHistory.observe(viewLifecycleOwner, { gameHistory ->
+//            this.gameHistory = gameHistory
+//            gamesAdapter.submitList(gameHistory)
+//            binding.recyclerView.adapter = gamesAdapter
+//        })
     }
 }
