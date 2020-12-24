@@ -1,10 +1,9 @@
 # Valorant Stat Tracker
 
 ## Description
-An Android mobile application used to record results from a game of Valorant and track your performance from game to game. I started working on this project after taking the "Developing Android Apps in Kotlin" Udacity course in order to gain experience using Kotlin in an Android app.
-
+An Android mobile application used to record results from a game of Valorant and track your performance from game to game. I started working on this project in order to gain experience using Kotlin in an Android app. This project was started after taking the "Developing Android Apps in Kotlin" Udacity course
 ## Project Status
-In Progress. I plan on eventually using the [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) Library to include charts and graphs, allowing a visual representation of improvement over time.
+In Progress. I plan on eventually using the [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) Library to include charts and graphs, allowing a visual representation of the player's improvement over time.
 
 ## Technologies
 Kotlin version: 1.4.21  
