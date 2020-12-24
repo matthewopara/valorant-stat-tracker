@@ -25,6 +25,9 @@ interface GameDao {
     @Query("SELECT * FROM game_table ORDER BY game_id DESC")
     fun getAllGames(): LiveData<List<Game>>
 
+    @Query("SELECT * FROM game_table ORDER BY game_id DESC")
+    fun getEveryGame(): List<Game>
+
     @Query("SELECT * FROM game_table ORDER BY game_id DESC LIMIT :x")
     suspend fun getLastXGames(x: Int): List<Game>
 
