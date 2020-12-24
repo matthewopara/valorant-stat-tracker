@@ -73,17 +73,18 @@ class GamesFragment : Fragment() {
         //  automatically when changed from the view model.
         //  Maybe i only need to call gameAdapter.notifyItemRemoved
         //  for every item that was delete
-        gamesViewModel.allGamesUpdated.observe(viewLifecycleOwner, { updated ->
-            if (updated) {
-                gamesViewModel.allGamesUpdatedComplete()
-                gamesAdapter.submitList(gamesViewModel.allGames)
-            }
-        })
 
-        observeSingleItemChanges()
+        displayAllGamesChanges()
+        displaySingleItemChanges()
     }
 
-    private fun observeSingleItemChanges() {
+    private fun displayAllGamesChanges() {
+        gamesViewModel.allGames.observe(viewLifecycleOwner, { newList ->
+            gamesAdapter.submitList((newList))
+        })
+    }
+
+    private fun displaySingleItemChanges() {
         gamesViewModel.gameItemUpdatedIndex.observe(viewLifecycleOwner, { index ->
             if (index >= 0) {
                 gamesAdapter.notifyItemChanged(index)

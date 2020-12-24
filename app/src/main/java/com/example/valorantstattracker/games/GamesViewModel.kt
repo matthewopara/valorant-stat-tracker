@@ -21,13 +21,9 @@ class GamesViewModel(
 
     private val _searchResults = MutableLiveData(emptyList<Game>())
 
-    private var _allGames = listOf<GameListItem>()
-    val allGames: List<GameListItem>
+    private var _allGames = MutableLiveData<List<GameListItem>>()
+    val allGames: LiveData<List<GameListItem>>
         get() = _allGames
-
-    private val _allGamesUpdated = MutableLiveData(false)
-    val allGamesUpdated: LiveData<Boolean>
-        get() = _allGamesUpdated
 
     private val _gameItemUpdatedIndex = MutableLiveData(-1)
     val gameItemUpdatedIndex: LiveData<Int>
@@ -53,13 +49,14 @@ class GamesViewModel(
     }
 
     private fun changeItemSelectState(index: Int) {
-        val clickedGame = _allGames[index]
-        if (clickedGame.isSelected) {
-            unSelectGameItem(clickedGame)
-        } else {
-            selectGameItem(clickedGame)
+        _allGames.value?.get(index)?.let { clickedGameItem ->
+            if (clickedGameItem.isSelected) {
+                unSelectGameItem(clickedGameItem)
+            } else {
+                selectGameItem(clickedGameItem)
+            }
+            _gameItemUpdatedIndex.value = index
         }
-        _gameItemUpdatedIndex.value = index
     }
 
     private fun unSelectGameItem(gameListItem: GameListItem) {
@@ -72,15 +69,10 @@ class GamesViewModel(
         numOfSelectedItems++
     }
 
-    fun allGamesUpdatedComplete() {
-        _allGamesUpdated.value = false
-    }
-
     private fun updateAllGames() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _allGames = GameListItem.createGameItemList(gameDao.getAllGames())
-                _allGamesUpdated.postValue(true)
+                _allGames.postValue(GameListItem.createGameItemList(gameDao.getAllGames()))
             }
         }
     }
@@ -105,7 +97,7 @@ class GamesViewModel(
 
     fun deleteSelectedGames() {
         CoroutineScope(Dispatchers.IO).launch {
-            _allGames.forEach {
+            _allGames.value?.forEach {
                 if (it.isSelected) {
                     gameDao.delete(it.game)
                 }
