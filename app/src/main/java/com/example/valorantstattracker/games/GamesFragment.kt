@@ -1,7 +1,6 @@
 package com.example.valorantstattracker.games
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGamesBinding
+import com.example.valorantstattracker.gamesrecyclerview.GameViewHolderFactory
 import com.example.valorantstattracker.gamesrecyclerview.GamesRecyclerAdapter
 
 class GamesFragment : Fragment() {
@@ -49,12 +49,7 @@ class GamesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val viewHolderFactory = ClickableGameViewHolderFactory(resources)
-        // TODO: set on click listeners
-        //  (How will you set the visibility of the selection bar when its time to turn it on?)
-        viewHolderFactory.setOnClickCallback { binding, position -> Log.d("HelloWorld", "Hello There :)") }
-        viewHolderFactory.setOnLongClickCallback { binding, position -> Log.d("HelloWorld", "Greetings :P") }
-        gamesAdapter = GamesRecyclerAdapter(viewHolderFactory)
+        gamesAdapter = GamesRecyclerAdapter(createViewHolderFactory())
         val decoration = GameItemDecoration(resources.getDimension(R.dimen.game_item_spacing).toInt())
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@GamesFragment.context)
@@ -63,19 +58,36 @@ class GamesFragment : Fragment() {
         }
     }
 
+    private fun createViewHolderFactory(): GameViewHolderFactory {
+        val viewHolderFactory = ClickableGameViewHolderFactory(resources)
+        viewHolderFactory.setOnClickCallback { binding, position -> gamesViewModel.gameItemClicked(position) }
+        viewHolderFactory.setOnLongClickCallback { binding, position -> gamesViewModel.gameItemLongClicked(position) }
+        return viewHolderFactory
+    }
+
     private fun displayGameHistory() {
+        // TODO: Do I really need to observe changes
+        //  to the entire games list?
+        //  Since I passed the same list reference to
+        //  the adapter, the list might be updated
+        //  automatically when changed from the view model.
+        //  Maybe i only need to call gameAdapter.notifyItemRemoved
+        //  for every item that was delete
         gamesViewModel.allGamesUpdated.observe(viewLifecycleOwner, { updated ->
             if (updated) {
                 gamesViewModel.allGamesUpdatedComplete()
                 gamesAdapter.submitList(gamesViewModel.allGames)
-                // TODO: Is this next line necessary?
-                binding.recyclerView.adapter = gamesAdapter
             }
         })
-//        gamesViewModel.gameHistory.observe(viewLifecycleOwner, { gameHistory ->
-//            this.gameHistory = gameHistory
-//            gamesAdapter.submitList(gameHistory)
-//            binding.recyclerView.adapter = gamesAdapter
-//        })
+
+        observeSingleItemChanges()
+    }
+
+    private fun observeSingleItemChanges() {
+        gamesViewModel.gameItemUpdatedIndex.observe(viewLifecycleOwner, { index ->
+            if (index >= 0) {
+                gamesAdapter.notifyItemChanged(index)
+            }
+        })
     }
 }

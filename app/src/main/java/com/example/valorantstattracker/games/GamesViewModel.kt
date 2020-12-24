@@ -1,6 +1,7 @@
 package com.example.valorantstattracker.games
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,8 +21,6 @@ class GamesViewModel(
 
     private val _searchResults = MutableLiveData(emptyList<Game>())
 
-    //val gameHistory = gameDao.getAllGames()
-
     private var _allGames = mutableListOf<GameListItem>()
     val allGames: List<GameListItem>
         get() = _allGames
@@ -30,8 +29,40 @@ class GamesViewModel(
     val allGamesUpdated: LiveData<Boolean>
         get() = _allGamesUpdated
 
+    private val _gameItemUpdatedIndex = MutableLiveData(-1)
+    val gameItemUpdatedIndex: LiveData<Int>
+        get() = _gameItemUpdatedIndex
+
+    private var numOfSelectedItems = 0
+
     init {
         updateAllGames()
+    }
+
+    fun gameItemClicked(index: Int) {
+        if (numOfSelectedItems > 0) {
+            changeItemSelectState(index)
+        } else {
+            // TODO: open game
+            Log.d("HelloWorld", "Opened game at index: $index")
+        }
+    }
+
+    fun gameItemLongClicked(index: Int) {
+        changeItemSelectState(index)
+    }
+
+    private fun changeItemSelectState(index: Int) {
+        val clickedGame = _allGames[index]
+        if (clickedGame.isSelected) {
+            clickedGame.isSelected = false
+            _gameItemUpdatedIndex.value = index
+            numOfSelectedItems--
+        } else {
+            clickedGame.isSelected = true
+            _gameItemUpdatedIndex.value = index
+            numOfSelectedItems++
+        }
     }
 
     fun allGamesUpdatedComplete() {
