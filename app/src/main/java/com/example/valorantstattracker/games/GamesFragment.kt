@@ -35,6 +35,7 @@ class GamesFragment : Fragment() {
         displayGameHistory()
 
         binding.newGameButton.setOnClickListener {
+            gamesViewModel.unSelectAllGameItems()
             val action = GamesFragmentDirections.actionGamesToGameEntry()
             findNavController().navigate(action)
         }

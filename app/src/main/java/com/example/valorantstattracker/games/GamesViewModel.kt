@@ -48,6 +48,16 @@ class GamesViewModel(
         changeItemSelectState(index)
     }
 
+    fun unSelectAllGameItems() {
+        _allGames.value?.let { list ->
+            for (gameItem in list) {
+                if (gameItem.isSelected) {
+                    unSelectGameItem(gameItem)
+                }
+            }
+        }
+    }
+
     private fun changeItemSelectState(index: Int) {
         _allGames.value?.get(index)?.let { clickedGameItem ->
             if (clickedGameItem.isSelected) {
