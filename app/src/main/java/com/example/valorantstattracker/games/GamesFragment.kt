@@ -33,12 +33,7 @@ class GamesFragment : Fragment() {
 
         initRecyclerView()
         displayGameHistory()
-
-        binding.newGameButton.setOnClickListener {
-            gamesViewModel.unSelectAllGameItems()
-            val action = GamesFragmentDirections.actionGamesToGameEntry()
-            findNavController().navigate(action)
-        }
+        setUpNewGameButton()
 
         return binding.root
     }
@@ -73,7 +68,7 @@ class GamesFragment : Fragment() {
         //  the adapter, the list might be updated
         //  automatically when changed from the view model.
         //  Maybe i only need to call gameAdapter.notifyItemRemoved
-        //  for every item that was delete
+        //  for every item that was deleted
 
         displayAllGamesChanges()
         displaySingleItemChanges()
@@ -91,5 +86,13 @@ class GamesFragment : Fragment() {
                 gamesAdapter.notifyItemChanged(index)
             }
         })
+    }
+
+    private fun setUpNewGameButton() {
+        binding.newGameButton.setOnClickListener {
+            gamesViewModel.unSelectAllGameItems()
+            val action = GamesFragmentDirections.actionGamesToGameEntry()
+            findNavController().navigate(action)
+        }
     }
 }
