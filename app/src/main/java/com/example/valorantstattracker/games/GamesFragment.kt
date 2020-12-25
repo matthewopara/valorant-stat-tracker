@@ -37,8 +37,7 @@ class GamesFragment : Fragment() {
         makeActionModeCallback()
 
         initRecyclerView()
-        displayGameHistory()
-        showActionBar()
+        displayUI()
         setUpNewGameButton()
 
         return binding.root
@@ -63,47 +62,34 @@ class GamesFragment : Fragment() {
     private fun createViewHolderFactory(): GameViewHolderFactory {
         val viewHolderFactory = ClickableGameViewHolderFactory(resources)
         viewHolderFactory.setOnClickCallback { _, position ->
-            gamesViewModel.onGameItemPressed(position)
+            gamesViewModel.gameItemPressed(position)
         }
         viewHolderFactory.setOnLongClickCallback { _, position ->
-            showActionMode()
-            gamesViewModel.onGameItemLongPressed(position)
+            gamesViewModel.gameItemLongPressed(position)
         }
-
-        gamesViewModel.numOfSelectedItems.observe(viewLifecycleOwner, { numSelected ->
-            if (numSelected > 0) {
-                actionMode?.title = getString(R.string.amount_selected, numSelected)
-            } else {
-                actionMode?.finish()
-            }
-
-        })
 
         return viewHolderFactory
     }
 
-
-
-    private fun displayGameHistory() {
-        // TODO: Do I really need to observe changes
-        //  to the entire games list?
-        //  Since I passed the same list reference to
-        //  the adapter, the list might be updated
-        //  automatically when changed from the view model.
-        //  Maybe i only need to call gameAdapter.notifyItemRemoved
-        //  for every item that was deleted
-
-        displayAllGamesChanges()
-        displaySingleItemChanges()
+    private fun displayUI() {
+        displayAllGames()
+        makeSingleItemChanges()
+        setUpActionMode()
     }
 
-    private fun displayAllGamesChanges() {
-        gamesViewModel.allGames.observe(viewLifecycleOwner, { newList ->
-            gamesAdapter.submitList((newList))
+    private fun displayAllGames() {
+        gamesViewModel.gameItems.observe(viewLifecycleOwner, { newList ->
+            gamesAdapter.submitList(newList)
+        })
+        gamesViewModel.updateEntireList.observe(viewLifecycleOwner, { shouldUpdate ->
+            if (shouldUpdate) {
+                gamesAdapter.notifyDataSetChanged()
+                gamesViewModel.updateEntireListComplete()
+            }
         })
     }
 
-    private fun displaySingleItemChanges() {
+    private fun makeSingleItemChanges() {
         gamesViewModel.gameItemUpdatedIndex.observe(viewLifecycleOwner, { index ->
             if (index >= 0) {
                 gamesAdapter.notifyItemChanged(index)
@@ -111,34 +97,46 @@ class GamesFragment : Fragment() {
         })
     }
 
-    private fun showActionBar() {
-        requireActivity().let { hostActivity ->
-            if (hostActivity is MainActivity) {
-                hostActivity.supportActionBar?.show()
+    private fun setUpActionMode() {
+        gamesViewModel.showActionMode.observe(viewLifecycleOwner, { shouldShow ->
+            if (shouldShow) {
+                showActionMode()
+            } else if (actionMode != null){
+                actionMode?.finish()
             }
-        }
-    }
-
-    private fun setUpNewGameButton() {
-        newGameButton = requireActivity().findViewById(R.id.floating_action_button)
-        newGameButton.show()
-
-        newGameButton.setOnClickListener {
-            gamesViewModel.onNewGameButtonPressed()
-            val action = GamesFragmentDirections.actionGamesToGameEntry()
-            findNavController().navigate(action)
-        }
+        })
+        gamesViewModel.numOfItemsSelectedTitle.observe(viewLifecycleOwner, { newTitle ->
+            actionMode?.title = newTitle
+        })
     }
 
     private fun showActionMode() {
         requireActivity().let { hostActivity ->
             if (hostActivity is MainActivity && actionMode == null) {
                 actionMode = hostActivity.startSupportActionMode(actionModeCallback)
+                hostActivity.getFloatingActionButton().hide()
             }
         }
     }
 
 
+    private fun setUpNewGameButton() {
+        newGameButton = requireActivity().findViewById(R.id.floating_action_button)
+        newGameButton.show()
+        setUpGameEntryNavigation()
+        newGameButton.setOnClickListener {
+            gamesViewModel.newGameButtonPressed()
+        }
+    }
+
+    private fun setUpGameEntryNavigation() {
+        gamesViewModel.navigateToGameEntry.observe(viewLifecycleOwner, { shouldNavigate ->
+            if (shouldNavigate) {
+                val action = GamesFragmentDirections.actionGamesToGameEntry()
+                findNavController().navigate(action)
+            }
+        })
+    }
 
     private fun makeActionModeCallback() {
         actionModeCallback = object : ActionMode.Callback {
@@ -159,7 +157,7 @@ class GamesFragment : Fragment() {
             override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
                 return when (item.itemId) {
                     R.id.delete_button -> {
-                        gamesViewModel.onActionModeDelete()
+                        gamesViewModel.actionModeDeletePressed()
                         mode.finish() // Action picked, so close the CAB
                         true
                     }
@@ -169,7 +167,12 @@ class GamesFragment : Fragment() {
 
             // Called when the user exits the action mode
             override fun onDestroyActionMode(mode: ActionMode) {
-                gamesViewModel.onActionModeExit()
+                requireActivity().let { hostActivity ->
+                    if (hostActivity is MainActivity) {
+                        hostActivity.getFloatingActionButton().show()
+                    }
+                }
+                gamesViewModel.actionModeExit()
                 actionMode = null
             }
         }
