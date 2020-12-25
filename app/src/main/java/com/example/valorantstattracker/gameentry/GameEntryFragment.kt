@@ -34,7 +34,6 @@ class GameEntryFragment : Fragment() {
         gameEntryViewModel = ViewModelProvider(this, gameEntryViewModelFactory)
             .get(GameEntryViewModel::class.java)
 
-        showAppBarLayout()
         hideFloatingActionButton()
         prepareForDataRetrieval()
         setUpConfirmButton()
@@ -46,14 +45,6 @@ class GameEntryFragment : Fragment() {
         val application = requireNotNull(activity).application
         val dataSource = GameDatabase.getInstance(application).getGameDao()
         return GameEntryViewModelFactory(dataSource, application)
-    }
-
-    private fun showAppBarLayout() {
-        requireActivity().let { hostActivity ->
-            if (hostActivity is MainActivity) {
-                hostActivity.supportActionBar?.show()
-            }
-        }
     }
 
     private fun hideFloatingActionButton() {
