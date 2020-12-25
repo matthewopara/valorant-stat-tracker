@@ -51,7 +51,7 @@ class GameEntryFragment : Fragment() {
     private fun showAppBarLayout() {
         requireActivity().let { hostActivity ->
             if (hostActivity is MainActivity) {
-                hostActivity.showAppBarLayout()
+                hostActivity.supportActionBar?.show()
             }
         }
     }

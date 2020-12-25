@@ -17,13 +17,5 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    fun showAppBarLayout() {
-        binding.appBarLayout.setExpanded(true)
-    }
-
-    fun hideAppBarLayout() {
-        binding.appBarLayout.setExpanded(false)
-    }
-
     fun getFloatingActionButton(): FloatingActionButton = binding.floatingActionButton
 }
