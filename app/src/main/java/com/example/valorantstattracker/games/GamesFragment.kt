@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.valorantstattracker.MainActivity
 import com.example.valorantstattracker.gamesrecyclerview.ClickableGameViewHolderFactory
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
@@ -15,6 +16,7 @@ import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGamesBinding
 import com.example.valorantstattracker.gamesrecyclerview.GameViewHolderFactory
 import com.example.valorantstattracker.gamesrecyclerview.GamesRecyclerAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class GamesFragment : Fragment() {
 
@@ -22,7 +24,7 @@ class GamesFragment : Fragment() {
     private lateinit var gamesViewModel: GamesViewModel
     private lateinit var gamesViewModelFactory: GamesViewModelFactory
     private lateinit var gamesAdapter: GamesRecyclerAdapter
-    private var gameHistory: List<Game>? = null
+    private lateinit var newGameButton: FloatingActionButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -33,6 +35,7 @@ class GamesFragment : Fragment() {
 
         initRecyclerView()
         displayGameHistory()
+        showAppBarLayout()
         setUpNewGameButton()
 
         return binding.root
@@ -88,8 +91,19 @@ class GamesFragment : Fragment() {
         })
     }
 
+    private fun showAppBarLayout() {
+        requireActivity().let { hostActivity ->
+            if (hostActivity is MainActivity) {
+                hostActivity.showAppBarLayout()
+            }
+        }
+    }
+
     private fun setUpNewGameButton() {
-        binding.newGameButton.setOnClickListener {
+        newGameButton = requireActivity().findViewById(R.id.floating_action_button)
+        newGameButton.show()
+
+        newGameButton.setOnClickListener {
             gamesViewModel.unSelectAllGameItems()
             val action = GamesFragmentDirections.actionGamesToGameEntry()
             findNavController().navigate(action)

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.valorantstattracker.MainActivity
 import com.example.valorantstattracker.objects.Agent
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.GameDatabase
@@ -33,6 +34,8 @@ class GameEntryFragment : Fragment() {
         gameEntryViewModel = ViewModelProvider(this, gameEntryViewModelFactory)
             .get(GameEntryViewModel::class.java)
 
+        showAppBarLayout()
+        hideFloatingActionButton()
         prepareForDataRetrieval()
         setUpConfirmButton()
 
@@ -43,6 +46,22 @@ class GameEntryFragment : Fragment() {
         val application = requireNotNull(activity).application
         val dataSource = GameDatabase.getInstance(application).getGameDao()
         return GameEntryViewModelFactory(dataSource, application)
+    }
+
+    private fun showAppBarLayout() {
+        requireActivity().let { hostActivity ->
+            if (hostActivity is MainActivity) {
+                hostActivity.showAppBarLayout()
+            }
+        }
+    }
+
+    private fun hideFloatingActionButton() {
+        requireActivity().let { hostActivity ->
+            if (hostActivity is MainActivity) {
+                hostActivity.getFloatingActionButton().hide()
+            }
+        }
     }
 
     private fun prepareForDataRetrieval() {
