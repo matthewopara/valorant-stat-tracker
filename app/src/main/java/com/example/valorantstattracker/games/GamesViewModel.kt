@@ -20,6 +20,8 @@ class GamesViewModel(
     application: Application) : AndroidViewModel(application) {
 
     private val _searchResults = MutableLiveData(emptyList<Game>())
+    val searchResults: LiveData<List<Game>>
+        get() = _searchResults
 
     private var _allGames = MutableLiveData<List<GameListItem>>()
     val allGames: LiveData<List<GameListItem>>
@@ -29,14 +31,17 @@ class GamesViewModel(
     val gameItemUpdatedIndex: LiveData<Int>
         get() = _gameItemUpdatedIndex
 
-    private var numOfSelectedItems = 0
+    private var _numOfSelectedItems = MutableLiveData(0)
+    val numOfSelectedItems: LiveData<Int>
+        get() = _numOfSelectedItems
 
     init {
         updateAllGames()
     }
 
-    fun gameItemClicked(index: Int) {
-        if (numOfSelectedItems > 0) {
+    fun onGameItemPressed(index: Int) {
+        val amountSelected = _numOfSelectedItems.value ?: 0
+        if (amountSelected > 0) {
             changeItemSelectState(index)
         } else {
             // TODO: open game
@@ -44,15 +49,29 @@ class GamesViewModel(
         }
     }
 
-    fun gameItemLongClicked(index: Int) {
+    fun onGameItemLongPressed(index: Int) {
         changeItemSelectState(index)
     }
 
-    fun unSelectAllGameItems() {
+    fun onActionModeExit() {
+        unSelectAllGameItems()
+    }
+
+    fun onActionModeDelete() {
+        // TODO: Instead of deleting, set a flag on the game. In OnCleared, delete all games that are flagged
+        deleteSelectedGames()
+    }
+
+    fun onNewGameButtonPressed() {
+        unSelectAllGameItems()
+    }
+
+    private fun unSelectAllGameItems() {
         _allGames.value?.let { list ->
-            for (gameItem in list) {
-                if (gameItem.isSelected) {
-                    unSelectGameItem(gameItem)
+            for (i in list.indices) {
+                if (list[i].isSelected) {
+                    unSelectGameItem(list[i])
+                    _gameItemUpdatedIndex.value = i
                 }
             }
         }
@@ -71,12 +90,12 @@ class GamesViewModel(
 
     private fun unSelectGameItem(gameListItem: GameListItem) {
         gameListItem.isSelected = false
-        numOfSelectedItems--
+        _numOfSelectedItems.value = _numOfSelectedItems.value?.minus(1)
     }
 
     private fun selectGameItem(gameListItem: GameListItem) {
         gameListItem.isSelected = true
-        numOfSelectedItems++
+        _numOfSelectedItems.value = _numOfSelectedItems.value?.plus(1)
     }
 
     private fun updateAllGames() {
@@ -88,24 +107,7 @@ class GamesViewModel(
     }
 
 
-
-
-    val searchResults: LiveData<List<Game>>
-        get() = _searchResults
-
-    private var lastEnteredTime: Long? = null
-
-    fun createGame(game: Game)
-    {
-        if (game.entryTimeMilli != lastEnteredTime) {
-            lastEnteredTime = game.entryTimeMilli
-            CoroutineScope(Dispatchers.IO).launch {
-                gameDao.insert(game)
-            }
-        }
-    }
-
-    fun deleteSelectedGames() {
+    private fun deleteSelectedGames() {
         CoroutineScope(Dispatchers.IO).launch {
             _allGames.value?.forEach {
                 if (it.isSelected) {

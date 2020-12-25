@@ -16,6 +16,7 @@
     <string name="plants">Plants</string>
     <string name="defuses">Defuses</string>
     <string name="confirm">Confirm</string>
+    <string name="amount_selected">%d selected</string>
 
     <string name="error_number_required">A number is required</string>
     <string name="error_input_required">Input is required</string>
