@@ -7,4 +7,5 @@
     <dimen name="game_item_spacing">24dp</dimen>
 
     <dimen name="normal_text_size">24sp</dimen>
+    <dimen name="giant_text_size" />
 </resources>
