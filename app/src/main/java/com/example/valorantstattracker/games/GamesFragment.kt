@@ -3,6 +3,7 @@ package com.example.valorantstattracker.games
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.view.ActionMode
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import com.example.valorantstattracker.databinding.FragmentGamesBinding
 import com.example.valorantstattracker.gamesrecyclerview.GameViewHolderFactory
 import com.example.valorantstattracker.gamesrecyclerview.GamesRecyclerAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class GamesFragment : Fragment() {
 
@@ -75,6 +77,7 @@ class GamesFragment : Fragment() {
         displayAllGames()
         makeSingleItemChanges()
         setUpActionMode()
+        setUpDeleteConfirmation()
     }
 
     private fun displayAllGames() {
@@ -135,6 +138,21 @@ class GamesFragment : Fragment() {
                 gamesViewModel.navigateToGameEntryComplete()
                 val action = GamesFragmentDirections.actionGamesToGameEntry()
                 findNavController().navigate(action)
+            }
+        })
+    }
+
+    private fun setUpDeleteConfirmation() {
+        gamesViewModel.showDeleteConfirmation.observe(viewLifecycleOwner, { showConfirmation ->
+            if (showConfirmation) {
+                Snackbar.make(
+                    binding.root,
+                    R.string.game_deleted,
+                    Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo) {
+                    gamesViewModel.undoDeletePressed()
+                }.show()
+                gamesViewModel.showDeleteConfirmationComplete()
             }
         })
     }

@@ -6,7 +6,10 @@ import androidx.lifecycle.*
 import com.example.valorantstattracker.GameListItem
 import com.example.valorantstattracker.GameListManager
 import com.example.valorantstattracker.R
+import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDao
+import com.example.valorantstattracker.objects.FLAGGED
+import com.example.valorantstattracker.objects.NOT_FLAGGED
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,6 +37,10 @@ class GamesViewModel(
             getApplication<Application>().resources.getString(R.string.amount_selected, itemCount)
         }
 
+    private val _showDeleteConfirmation = MutableLiveData(false)
+    val showDeleteConfirmation: LiveData<Boolean>
+        get() = _showDeleteConfirmation
+
     private val _showActionMode = MutableLiveData(false)
     val showActionMode: LiveData<Boolean>
         get() = _showActionMode
@@ -41,6 +48,8 @@ class GamesViewModel(
     private val _navigateToGameEntry = MutableLiveData(false)
     val navigateToGameEntry: LiveData<Boolean>
         get() = _navigateToGameEntry
+
+    private val recentlyDeletedGames = mutableListOf<Game>()
 
     init {
         resetGameListManager()
@@ -50,7 +59,7 @@ class GamesViewModel(
     // TODO: Eventually will have to filter list to only contain games that are not flagged for deletion
     private fun resetGameListManager() {
         CoroutineScope(Dispatchers.IO).launch {
-            val games = gameDao.getAllGames()
+            val games = gameDao.getAllGames().filter { it.deleteFlag == NOT_FLAGGED }
             withContext(Dispatchers.Main) {
                 gameListManager.setGameItemList(games)
             }
@@ -101,10 +110,29 @@ class GamesViewModel(
     }
 
     fun actionModeDeletePressed() {
+        recentlyDeletedGames.clear()
+        gameListManager.gameItems.value?.forEach { gameItem ->
+            if (gameItem.isSelected) {
+                gameItem.game.deleteFlag = FLAGGED
+                recentlyDeletedGames.add(gameItem.game)
+            }
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            recentlyDeletedGames.forEach {
+                gameDao.update(it)
+            }
+            resetGameListManager()
+            _showDeleteConfirmation.postValue(true)
+        }
+    }
+
+    fun showDeleteConfirmationComplete() {
+        _showDeleteConfirmation.value = false
+    }
+
+    fun undoDeletePressed() {
         // TODO: Need to Implement
-        //  For now delete selected games and reset game list manager. Don't unselect all games
-        //  Later implement flagging to allow user to undo a deletion (alo reset game list manager)
-        Log.d("GamesViewModel", "Delete")
+        Log.d("GamesViewModel", "Undo")
     }
 
     fun newGameButtonPressed() {
@@ -113,15 +141,6 @@ class GamesViewModel(
 
     fun navigateToGameEntryComplete() {
         _navigateToGameEntry.value = false
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        deleteFlaggedGames()
-    }
-
-    private fun deleteFlaggedGames() {
-        // TODO: Need to implement
     }
 
     private fun clearGameHistory() {
