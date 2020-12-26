@@ -19,12 +19,14 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         setContentView(binding.root)
+        deleteFlaggedGames()
+    }
 
+    private fun deleteFlaggedGames() {
         val gameDao = GameDatabase.getInstance(this).getGameDao()
         CoroutineScope(Dispatchers.IO).launch {
             gameDao.deleteFlaggedGames()
         }
     }
-
     fun getFloatingActionButton(): FloatingActionButton = binding.floatingActionButton
 }
