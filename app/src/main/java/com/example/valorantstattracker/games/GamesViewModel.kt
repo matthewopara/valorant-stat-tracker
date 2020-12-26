@@ -131,8 +131,13 @@ class GamesViewModel(
     }
 
     fun undoDeletePressed() {
-        // TODO: Need to Implement
-        Log.d("GamesViewModel", "Undo")
+        CoroutineScope(Dispatchers.IO).launch {
+            recentlyDeletedGames.forEach { game ->
+                game.deleteFlag = NOT_FLAGGED
+                gameDao.update(game)
+            }
+            resetGameListManager()
+        }
     }
 
     fun newGameButtonPressed() {
