@@ -3,7 +3,6 @@ package com.example.valorantstattracker.games
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.view.ActionMode
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -143,11 +142,11 @@ class GamesFragment : Fragment() {
     }
 
     private fun setUpDeleteConfirmation() {
-        gamesViewModel.showDeleteConfirmation.observe(viewLifecycleOwner, { showConfirmation ->
-            if (showConfirmation) {
+        gamesViewModel.deletionConfirmMessage.observe(viewLifecycleOwner, { message ->
+            if (message.isNotEmpty()) {
                 Snackbar.make(
                     binding.root,
-                    R.string.game_deleted,
+                    message,
                     Snackbar.LENGTH_LONG)
                     .setAction(R.string.undo) {
                     gamesViewModel.undoDeletePressed()

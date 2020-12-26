@@ -19,6 +19,7 @@ class GamesViewModel(
     private val gameDao: GameDao,
     application: Application) : AndroidViewModel(application) {
 
+    private val resources = application.resources
     private val gameListManager = GameListManager(application.resources)
 
     val gameItems: LiveData<List<GameListItem>>
@@ -34,12 +35,12 @@ class GamesViewModel(
 
     val numOfItemsSelectedTitle: LiveData<String>
         get() = Transformations.map(gameListManager.numOfItemsSelected) { itemCount ->
-            getApplication<Application>().resources.getString(R.string.amount_selected, itemCount)
+            resources.getString(R.string.amount_selected, itemCount)
         }
 
-    private val _showDeleteConfirmation = MutableLiveData(false)
-    val showDeleteConfirmation: LiveData<Boolean>
-        get() = _showDeleteConfirmation
+    private val _deletionConfirmMessage = MutableLiveData("")
+    val deletionConfirmMessage: LiveData<String>
+        get() = _deletionConfirmMessage
 
     private val _showActionMode = MutableLiveData(false)
     val showActionMode: LiveData<Boolean>
@@ -122,12 +123,20 @@ class GamesViewModel(
                 gameDao.update(it)
             }
             resetGameListManager()
-            _showDeleteConfirmation.postValue(true)
+            createDeleteConfirmMessage(recentlyDeletedGames.size)
+        }
+    }
+
+    private fun createDeleteConfirmMessage(amount: Int) {
+        if (amount == 1) {
+            _deletionConfirmMessage.postValue(resources.getString(R.string.one_game_deleted))
+        } else {
+            _deletionConfirmMessage.postValue(resources.getString(R.string.games_deleted, amount))
         }
     }
 
     fun showDeleteConfirmationComplete() {
-        _showDeleteConfirmation.value = false
+        _deletionConfirmMessage.value = ""
     }
 
     fun undoDeletePressed() {
