@@ -40,6 +40,7 @@ class GamesFragment : Fragment() {
         initRecyclerView()
         displayUI()
         setUpNewGameButton()
+        setUpOpenGameListener()
 
         return binding.root
     }
@@ -152,6 +153,16 @@ class GamesFragment : Fragment() {
                     gamesViewModel.undoDeletePressed()
                 }.show()
                 gamesViewModel.showDeleteConfirmationComplete()
+            }
+        })
+    }
+
+    private fun setUpOpenGameListener() {
+        gamesViewModel.openGame.observe(viewLifecycleOwner, { game ->
+            if (game != null) {
+                val action = GamesFragmentDirections.actionGamesToGameInfo(game)
+                findNavController().navigate(action)
+                gamesViewModel.openGameComplete()
             }
         })
     }

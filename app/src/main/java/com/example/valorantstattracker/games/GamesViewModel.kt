@@ -50,14 +50,16 @@ class GamesViewModel(
     val navigateToGameEntry: LiveData<Boolean>
         get() = _navigateToGameEntry
 
+    private val _openGame = MutableLiveData<Game>()
+    val openGame: LiveData<Game>
+        get() = _openGame
+
     private val recentlyDeletedGames = mutableListOf<Game>()
 
     init {
         resetGameListManager()
-        //updateAllGames()
     }
 
-    // TODO: Eventually will have to filter list to only contain games that are not flagged for deletion
     private fun resetGameListManager() {
         CoroutineScope(Dispatchers.IO).launch {
             val games = gameDao.getAllGames().filter { it.deleteFlag == NOT_FLAGGED }
@@ -71,7 +73,7 @@ class GamesViewModel(
         if (isSelecting()) {
             changeItemSelectState(itemIndex)
         } else {
-            openGameInfo()
+            openGameInfo(itemIndex)
         }
     }
 
@@ -95,9 +97,14 @@ class GamesViewModel(
         }
     }
 
-    private fun openGameInfo() {
-        // TODO: Need to Implement
-        Log.d("GamesViewModel", "Open game info screen")
+    private fun openGameInfo(itemIndex: Int) {
+        gameListManager.gameItems.value?.get(itemIndex)?.game?.let {
+            _openGame.value = it
+        }
+    }
+
+    fun openGameComplete() {
+        _openGame.value = null
     }
 
     fun actionModeExit() {
