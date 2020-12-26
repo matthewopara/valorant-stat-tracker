@@ -36,4 +36,7 @@ data class Game(
 
     val plants: Int,
     val defuses: Int,
+
+    @ColumnInfo(name = "delete_flag")
+    var deleteFlag: Int = 0
 ) : Parcelable

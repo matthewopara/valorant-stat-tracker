@@ -1,6 +1,5 @@
 package com.example.valorantstattracker.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -15,6 +14,9 @@ interface GameDao {
 
     @Delete
     suspend fun delete(game: Game)
+
+    @Query("DELETE FROM game_table WHERE delete_flag = 1")
+    suspend fun deleteFlaggedGames()
 
     @Query("DELETE FROM game_table")
     suspend fun clear()

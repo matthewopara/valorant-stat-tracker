@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "31ee9d100be074dd44ef5a32db5b0de8",
+    "identityHash": "b02a64aa1c7a45eaa8b6f90384befb36",
     "entities": [
       {
         "tableName": "game_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`game_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `entry_time_milli` INTEGER NOT NULL, `result` INTEGER NOT NULL, `agent_name` TEXT NOT NULL, `combat_score` INTEGER NOT NULL, `kills` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `assists` INTEGER NOT NULL, `econ_rating` INTEGER NOT NULL, `first_bloods` INTEGER NOT NULL, `plants` INTEGER NOT NULL, `defuses` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`game_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `entry_time_milli` INTEGER NOT NULL, `result` INTEGER NOT NULL, `agent_name` TEXT NOT NULL, `combat_score` INTEGER NOT NULL, `kills` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `assists` INTEGER NOT NULL, `econ_rating` INTEGER NOT NULL, `first_bloods` INTEGER NOT NULL, `plants` INTEGER NOT NULL, `defuses` INTEGER NOT NULL, `delete_flag` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "gameId",
@@ -79,6 +79,12 @@
             "columnName": "defuses",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "deleteFlag",
+            "columnName": "delete_flag",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -94,7 +100,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '31ee9d100be074dd44ef5a32db5b0de8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b02a64aa1c7a45eaa8b6f90384befb36')"
     ]
   }
 }

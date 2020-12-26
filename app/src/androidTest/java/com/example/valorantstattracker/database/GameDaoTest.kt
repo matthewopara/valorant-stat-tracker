@@ -64,6 +64,22 @@ class GameDaoTest {
     }
 
     @Test
+    fun insertAndDeleteFlagged() {
+        ioScope.launch {
+            for (i in 1..5) {
+                val game1 = createGameWithAgent(Agent.KILLJOY)
+                val game2 = createGameWithAgent(Agent.KILLJOY)
+                game1.deleteFlag = 0
+                game2.deleteFlag = 1
+            }
+            gameDao.deleteFlaggedGames()
+            val allGames = gameDao.getAllGames()
+            val flaggedGameCount = allGames.count { it.deleteFlag == 1 }
+            assertEquals(0, flaggedGameCount)
+        }
+    }
+
+    @Test
     fun clearGames() {
         ioScope.launch {
             for (i in 1..5) {
