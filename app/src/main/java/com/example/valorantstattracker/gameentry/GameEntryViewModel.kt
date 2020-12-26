@@ -127,8 +127,8 @@ class GameEntryViewModel(private val gameDao: GameDao,
             val newGame = makeGameFromInputs()
             CoroutineScope(Dispatchers.IO).launch {
                 gameDao.insert(newGame)
+                _navigateToGamesFragment.postValue(true)
             }
-            _navigateToGamesFragment.value = true
         } else {
             _showSnackbarError.value = true
         }
