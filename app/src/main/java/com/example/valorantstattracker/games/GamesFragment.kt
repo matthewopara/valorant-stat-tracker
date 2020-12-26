@@ -132,6 +132,7 @@ class GamesFragment : Fragment() {
     private fun setUpGameEntryNavigation() {
         gamesViewModel.navigateToGameEntry.observe(viewLifecycleOwner, { shouldNavigate ->
             if (shouldNavigate) {
+                gamesViewModel.navigateToGameEntryComplete()
                 val action = GamesFragmentDirections.actionGamesToGameEntry()
                 findNavController().navigate(action)
             }
