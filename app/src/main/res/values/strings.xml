@@ -17,6 +17,7 @@
     <string name="defuses">Defuses</string>
     <string name="confirm">Confirm</string>
     <string name="amount_selected">%d selected</string>
+    <string name="game_deleted">Game deleted</string>
     <string name="undo">Undo</string>
 
     <string name="error_number_required">A number is required</string>
