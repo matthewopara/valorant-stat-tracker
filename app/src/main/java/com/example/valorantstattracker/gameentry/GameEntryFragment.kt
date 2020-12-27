@@ -36,6 +36,7 @@ class GameEntryFragment : Fragment() {
             .get(GameEntryViewModel::class.java)
 
         BasicUIUtil.hideFloatingActionButton(requireActivity() as MainActivity)
+        BasicUIUtil.makeTabLayoutGone(requireActivity() as MainActivity)
         prepareForDataRetrieval()
         setUpConfirmButton()
 

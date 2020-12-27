@@ -27,6 +27,7 @@ class GameInfoFragment : Fragment() {
         binding = FragmentGameInfoBinding.inflate(inflater)
         game = args.game
         BasicUIUtil.hideFloatingActionButton(requireActivity() as MainActivity)
+        BasicUIUtil.makeTabLayoutGone(requireActivity() as MainActivity)
         displayGameInfo()
         return binding.root
     }

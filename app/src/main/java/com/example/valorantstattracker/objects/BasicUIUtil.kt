@@ -1,5 +1,6 @@
 package com.example.valorantstattracker.objects
 
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.valorantstattracker.MainActivity
 
@@ -20,5 +21,17 @@ object BasicUIUtil {
         activity.getFloatingActionButton().setOnClickListener {
             listener()
         }
+    }
+
+    fun makeTabLayoutVisible(activity: MainActivity) {
+        activity.getTabLayout().visibility = View.VISIBLE
+    }
+
+    fun makeTabLayoutInvisible(activity: MainActivity) {
+        activity.getTabLayout().visibility = View.INVISIBLE
+    }
+
+    fun makeTabLayoutGone(activity: MainActivity) {
+        activity.getTabLayout().visibility = View.GONE
     }
 }

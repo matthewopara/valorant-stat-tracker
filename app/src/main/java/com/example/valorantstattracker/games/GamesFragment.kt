@@ -73,6 +73,7 @@ class GamesFragment : Fragment() {
     }
 
     private fun displayUI() {
+        BasicUIUtil.makeTabLayoutVisible(requireActivity() as MainActivity)
         displayAllGames()
         makeSingleItemChanges()
         setUpActionMode()
@@ -117,6 +118,7 @@ class GamesFragment : Fragment() {
             if (hostActivity is MainActivity && actionMode == null) {
                 actionMode = hostActivity.startSupportActionMode(actionModeCallback)
                 BasicUIUtil.hideFloatingActionButton(hostActivity)
+                BasicUIUtil.makeTabLayoutInvisible(hostActivity)
             }
         }
     }
@@ -193,6 +195,7 @@ class GamesFragment : Fragment() {
             // Called when the user exits the action mode
             override fun onDestroyActionMode(mode: ActionMode) {
                 BasicUIUtil.showFloatingActionButton(requireActivity() as MainActivity)
+                BasicUIUtil.makeTabLayoutVisible(requireActivity() as MainActivity)
                 gamesViewModel.actionModeExit()
                 actionMode = null
             }

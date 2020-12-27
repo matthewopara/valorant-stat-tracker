@@ -43,9 +43,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab?) { }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                // TODO: Implement
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) { }
         })
     }
 
