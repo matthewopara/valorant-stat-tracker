@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_games_to_gameInfo"
             app:destination="@id/gameInfoFragment" />
+        <action
+            android:id="@+id/action_games_to_insights"
+            app:destination="@id/insightsFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameEntryFragment"
@@ -36,5 +39,14 @@
         <argument
             android:name="game"
             app:argType="com.example.valorantstattracker.database.Game" />
+    </fragment>
+    <fragment
+        android:id="@+id/insightsFragment"
+        android:name="com.example.valorantstattracker.InsightsFragment"
+        android:label="fragment_insights"
+        tools:layout="@layout/fragment_insights" >
+        <action
+            android:id="@+id/action_insights_to_games"
+            app:destination="@id/gamesFragment" />
     </fragment>
 </navigation>
