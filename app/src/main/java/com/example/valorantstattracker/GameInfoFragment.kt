@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.valorantstattracker.database.Game
@@ -22,9 +23,14 @@ class GameInfoFragment : Fragment() {
 
         binding = FragmentGameInfoBinding.inflate(inflater)
         game = args.game
+        setActionbarTitle()
         hideFloatingActionButton()
         displayGameInfo()
         return binding.root
+    }
+
+    private fun setActionbarTitle() {
+        (activity as AppCompatActivity).supportActionBar?.title = game.agentName
     }
 
     private fun hideFloatingActionButton() {

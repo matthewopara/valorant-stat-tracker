@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/gamesFragment"
         android:name="com.example.valorantstattracker.games.GamesFragment"
-        android:label="fragment_games"
-        tools:layout="@layout/fragment_games" >
+        android:label="@string/game_history"
+        tools:layout="@layout/fragment_games">
         <action
             android:id="@+id/action_games_to_gameEntry"
             app:destination="@id/gameEntryFragment" />
@@ -19,8 +19,8 @@
     <fragment
         android:id="@+id/gameEntryFragment"
         android:name="com.example.valorantstattracker.gameentry.GameEntryFragment"
-        android:label="fragment_game_entry"
-        tools:layout="@layout/fragment_game_entry" >
+        android:label="@string/new_game"
+        tools:layout="@layout/fragment_game_entry">
         <action
             android:id="@+id/action_gameEntry_to_games"
             app:destination="@id/gamesFragment" />
@@ -28,8 +28,8 @@
     <fragment
         android:id="@+id/gameInfoFragment"
         android:name="com.example.valorantstattracker.GameInfoFragment"
-        android:label="fragment_game_info"
-        tools:layout="@layout/fragment_game_info" >
+        android:label=""
+        tools:layout="@layout/fragment_game_info">
         <action
             android:id="@+id/action_gameInfo_to_games"
             app:destination="@id/gamesFragment" />
