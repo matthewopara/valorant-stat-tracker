@@ -26,10 +26,14 @@ class GameInfoFragment : Fragment() {
 
         binding = FragmentGameInfoBinding.inflate(inflater)
         game = args.game
-        setActionbarTitle()
         hideFloatingActionButton()
         displayGameInfo()
         return binding.root
+    }
+
+    override fun onResume() {
+        setActionbarTitle()
+        super.onResume()
     }
 
     private fun setActionbarTitle() {
