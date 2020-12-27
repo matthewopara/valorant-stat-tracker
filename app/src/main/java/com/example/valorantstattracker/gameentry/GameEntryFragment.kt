@@ -15,6 +15,7 @@ import com.example.valorantstattracker.objects.Agent
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGameEntryBinding
+import com.example.valorantstattracker.objects.BasicUIUtil
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
@@ -34,7 +35,7 @@ class GameEntryFragment : Fragment() {
         gameEntryViewModel = ViewModelProvider(this, gameEntryViewModelFactory)
             .get(GameEntryViewModel::class.java)
 
-        hideFloatingActionButton()
+        BasicUIUtil.hideFloatingActionButton(requireActivity() as MainActivity)
         prepareForDataRetrieval()
         setUpConfirmButton()
 
@@ -45,14 +46,6 @@ class GameEntryFragment : Fragment() {
         val application = requireNotNull(activity).application
         val dataSource = GameDatabase.getInstance(application).getGameDao()
         return GameEntryViewModelFactory(dataSource, application)
-    }
-
-    private fun hideFloatingActionButton() {
-        requireActivity().let { hostActivity ->
-            if (hostActivity is MainActivity) {
-                hostActivity.getFloatingActionButton().hide()
-            }
-        }
     }
 
     private fun prepareForDataRetrieval() {

@@ -14,7 +14,7 @@ import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentGamesBinding
 import com.example.valorantstattracker.gamesrecyclerview.GameViewHolderFactory
 import com.example.valorantstattracker.gamesrecyclerview.GamesRecyclerAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.valorantstattracker.objects.BasicUIUtil
 import com.google.android.material.snackbar.Snackbar
 
 class GamesFragment : Fragment() {
@@ -23,7 +23,6 @@ class GamesFragment : Fragment() {
     private lateinit var gamesViewModel: GamesViewModel
     private lateinit var gamesViewModelFactory: GamesViewModelFactory
     private lateinit var gamesAdapter: GamesRecyclerAdapter
-    private lateinit var newGameButton: FloatingActionButton
 
     private var actionMode: ActionMode? = null
     private lateinit var  actionModeCallback: ActionMode.Callback
@@ -117,19 +116,16 @@ class GamesFragment : Fragment() {
         requireActivity().let { hostActivity ->
             if (hostActivity is MainActivity && actionMode == null) {
                 actionMode = hostActivity.startSupportActionMode(actionModeCallback)
-                hostActivity.getFloatingActionButton().hide()
+                BasicUIUtil.hideFloatingActionButton(hostActivity)
             }
         }
     }
 
 
     private fun setUpNewGameButton() {
-        newGameButton = requireActivity().findViewById(R.id.floating_action_button)
-        newGameButton.show()
+        BasicUIUtil.showFloatingActionButton(requireActivity() as MainActivity)
+        BasicUIUtil.setFloatingActionButtonListener(requireActivity() as MainActivity) { gamesViewModel.newGameButtonPressed() }
         setUpGameEntryNavigation()
-        newGameButton.setOnClickListener {
-            gamesViewModel.newGameButtonPressed()
-        }
     }
 
     private fun setUpGameEntryNavigation() {
@@ -196,11 +192,7 @@ class GamesFragment : Fragment() {
 
             // Called when the user exits the action mode
             override fun onDestroyActionMode(mode: ActionMode) {
-                requireActivity().let { hostActivity ->
-                    if (hostActivity is MainActivity) {
-                        hostActivity.getFloatingActionButton().show()
-                    }
-                }
+                BasicUIUtil.showFloatingActionButton(requireActivity() as MainActivity)
                 gamesViewModel.actionModeExit()
                 actionMode = null
             }
