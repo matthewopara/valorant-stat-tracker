@@ -1,7 +1,7 @@
 package com.example.valorantstattracker.gamesrecyclerview
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.valorantstattracker.GameListItem
+import com.example.valorantstattracker.gamelistitem.GameListItem
 
 class GameItemDiffCallback(
     private val oldGameList: List<GameListItem>,

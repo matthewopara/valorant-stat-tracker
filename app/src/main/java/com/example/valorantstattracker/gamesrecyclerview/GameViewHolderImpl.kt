@@ -4,9 +4,8 @@ import android.content.res.Resources
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.valorantstattracker.GameListItem
+import com.example.valorantstattracker.gamelistitem.GameListItem
 import com.example.valorantstattracker.R
-import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.databinding.GameListItemBinding
 import com.example.valorantstattracker.objects.Agent
 import com.example.valorantstattracker.objects.GameResult

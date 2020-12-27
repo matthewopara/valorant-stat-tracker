@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameInfoFragment"
-        android:name="com.example.valorantstattracker.GameInfoFragment"
+        android:name="com.example.valorantstattracker.games.GameInfoFragment"
         android:label=""
         tools:layout="@layout/fragment_game_info">
         <action

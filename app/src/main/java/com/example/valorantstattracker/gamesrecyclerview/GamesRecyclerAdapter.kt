@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.valorantstattracker.GameListItem
+import com.example.valorantstattracker.gamelistitem.GameListItem
 import com.example.valorantstattracker.databinding.GameListItemBinding
 
 class GamesRecyclerAdapter(private val factory: GameViewHolderFactory) :

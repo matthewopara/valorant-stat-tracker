@@ -1,4 +1,4 @@
-package com.example.valorantstattracker
+package com.example.valorantstattracker.gamelistitem
 
 import android.content.res.Resources
 import androidx.lifecycle.LiveData

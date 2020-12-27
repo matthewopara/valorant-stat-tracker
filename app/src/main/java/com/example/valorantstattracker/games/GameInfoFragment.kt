@@ -1,4 +1,4 @@
-package com.example.valorantstattracker
+package com.example.valorantstattracker.games
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.example.valorantstattracker.GameInfoFragmentArgs
+import com.example.valorantstattracker.MainActivity
+import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.databinding.FragmentGameInfoBinding
 import com.example.valorantstattracker.objects.Agent

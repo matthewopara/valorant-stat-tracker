@@ -1,10 +1,9 @@
 package com.example.valorantstattracker.games
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.valorantstattracker.GameListItem
-import com.example.valorantstattracker.GameListManager
+import com.example.valorantstattracker.gamelistitem.GameListItem
+import com.example.valorantstattracker.gamelistitem.GameListManager
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.database.GameDao
