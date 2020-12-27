@@ -34,4 +34,7 @@
     <string name="invalid_data">Some of the data is invalid</string>
     <string name="game_history">Game History</string>
     <string name="new_game">New Game</string>
+
+    <string name="games">Games</string>
+    <string name="insights">Insights</string>
 </resources>
