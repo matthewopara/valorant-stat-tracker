@@ -11,6 +11,7 @@ import com.example.valorantstattracker.database.Game
 import com.example.valorantstattracker.databinding.FragmentGameInfoBinding
 import com.example.valorantstattracker.objects.Agent
 import com.example.valorantstattracker.objects.GameResult
+import com.example.valorantstattracker.objects.TimeCalculator
 
 class GameInfoFragment : Fragment() {
 
@@ -56,6 +57,8 @@ class GameInfoFragment : Fragment() {
         binding.infoFirstBloods.text = resources.getString(R.string.first_bloods_display, game.firstBloods)
         binding.infoPlants.text = resources.getString(R.string.plants_display, game.plants)
         binding.infoDefuses.text = resources.getString(R.string.defuses_display, game.defuses)
+        binding.infoDate.text = TimeCalculator.getDate(game.entryTimeMilli)
+        binding.infoTime.text = TimeCalculator.getTime(game.entryTimeMilli)
     }
 
 

@@ -30,14 +30,17 @@
                 app:layout_constraintEnd_toStartOf="@+id/divider"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/omen_avatar" />
+                tools:srcCompat="@drawable/omen_avatar" />
 
             <TextView
                 android:id="@+id/info_game_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="48sp"
-                app:layout_constraintBottom_toTopOf="@+id/info_combat_score"
+                android:layout_marginStart="@dimen/small_spacing"
+                android:layout_marginEnd="@dimen/small_spacing"
+                android:textAlignment="center"
+                android:textSize="64sp"
+                app:layout_constraintBottom_toTopOf="@+id/info_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/info_agent_image"
@@ -46,28 +49,29 @@
                 tools:text="Win" />
 
             <TextView
-                android:id="@+id/info_combat_score"
+                android:id="@+id/info_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/game_info_text_size"
-                app:layout_constraintBottom_toTopOf="@+id/info_econ_rating"
+                app:layout_constraintBottom_toTopOf="@+id/info_time"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/info_agent_image"
                 app:layout_constraintTop_toBottomOf="@+id/info_game_result"
-                tools:text="Combat Score: 387" />
+                tools:text="Dec 26, 2020" />
 
             <TextView
-                android:id="@+id/info_econ_rating"
+                android:id="@+id/info_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/medium_spacing"
                 android:textSize="@dimen/game_info_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/divider"
-                app:layout_constraintTop_toBottomOf="@+id/info_combat_score"
-                tools:text="Economy Rating: 245" />
+                app:layout_constraintTop_toBottomOf="@+id/info_date"
+                tools:text="8:51 PM" />
 
             <View
                 android:id="@+id/divider"
@@ -84,7 +88,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="225dp">
 
             <View
                 android:id="@+id/divider3"
@@ -97,15 +101,28 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/info_combat_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/game_info_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/info_kills"
+                app:layout_constraintEnd_toStartOf="@+id/divider3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread"
+                tools:text="Combat Score: 247" />
+
+            <TextView
                 android:id="@+id/info_kills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/game_info_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/info_deaths"
                 app:layout_constraintEnd_toStartOf="@+id/divider3"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@+id/info_combat_score"
                 tools:text="Kills: 18" />
 
             <TextView
@@ -115,6 +132,7 @@
                 android:textSize="@dimen/game_info_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/info_assists"
                 app:layout_constraintEnd_toStartOf="@+id/divider3"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/info_kills"
                 tools:text="Deaths: 7" />
@@ -126,9 +144,22 @@
                 android:textSize="@dimen/game_info_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/divider3"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/info_deaths"
                 tools:text="Assists: 8" />
+
+            <TextView
+                android:id="@+id/info_econ_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/game_info_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/info_first_bloods"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/divider3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread"
+                tools:text="Economy Rating: 230" />
 
             <TextView
                 android:id="@+id/info_first_bloods"
@@ -137,8 +168,9 @@
                 android:textSize="@dimen/game_info_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/info_plants"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/divider3"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_econ_rating"
                 tools:text="First Bloods: 2" />
 
             <TextView
@@ -148,6 +180,7 @@
                 android:textSize="@dimen/game_info_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/info_defuses"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/divider3"
                 app:layout_constraintTop_toBottomOf="@+id/info_first_bloods"
                 tools:text="Plants: 1" />
@@ -159,9 +192,11 @@
                 android:textSize="@dimen/game_info_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/divider3"
                 app:layout_constraintTop_toBottomOf="@+id/info_plants"
                 tools:text="Defuses: 3" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
