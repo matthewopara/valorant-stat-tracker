@@ -19,5 +19,7 @@ git clone https://github.com/matthewopara/valorant-stat-tracker.git
 
 ## Screenshots
 <img src="./screenshots/screenshot_game_history.png" width="250"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./screenshots/screenshot_data_entry.png" width="250">
+<img src="./screenshots/screenshot_game_info.png" width="250"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./screenshots/screenshot_new_game.png" width="250">
+
 
