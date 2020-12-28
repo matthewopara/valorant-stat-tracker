@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.valorantstattracker.databinding.FragmentInsightsBinding
+import com.example.valorantstattracker.objects.BasicUIUtil
 
 class InsightsFragment : Fragment() {
 
@@ -15,6 +16,7 @@ class InsightsFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
 
         binding = FragmentInsightsBinding.inflate(inflater)
+        BasicUIUtil.hideFloatingActionButton(requireActivity() as MainActivity)
 
         return binding.root
     }
