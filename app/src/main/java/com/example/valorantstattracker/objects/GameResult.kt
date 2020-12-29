@@ -9,6 +9,10 @@ object GameResult {
     const val LOSE: Int = 1
     const val  DRAW: Int = 2
 
+    fun isValidGameResult(result: Int): Boolean {
+        return result == WIN || result == LOSE || result == DRAW
+    }
+
     fun convertResultStringToInt(result: String, resources: Resources): Int? {
         return when (result) {
             resources.getString(R.string.win) -> WIN
