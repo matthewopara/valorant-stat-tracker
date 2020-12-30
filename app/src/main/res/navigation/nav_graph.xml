@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/insightsFragment"
-        android:name="com.example.valorantstattracker.InsightsFragment"
+        android:name="com.example.valorantstattracker.insights.InsightsFragment"
         android:label="fragment_insights"
         tools:layout="@layout/fragment_insights" >
         <action

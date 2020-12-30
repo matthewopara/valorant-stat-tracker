@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.ActivityMainBinding
 import com.example.valorantstattracker.games.GamesFragmentDirections
+import com.example.valorantstattracker.insights.InsightsFragmentDirections
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
