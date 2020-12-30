@@ -17,7 +17,9 @@
             app:destination="@id/gameInfoFragment" />
         <action
             android:id="@+id/action_games_to_insights"
-            app:destination="@id/insightsFragment" />
+            app:destination="@id/insightsFragment"
+            app:popUpTo="@id/gamesFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/gameEntryFragment"
@@ -47,6 +49,8 @@
         tools:layout="@layout/fragment_insights" >
         <action
             android:id="@+id/action_insights_to_games"
-            app:destination="@id/gamesFragment" />
+            app:destination="@id/gamesFragment"
+            app:popUpTo="@id/insightsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
