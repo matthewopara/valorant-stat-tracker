@@ -3,6 +3,7 @@
     <string name="win">Win</string>
     <string name="lose">Lose</string>
     <string name="draw">Draw</string>
+    <string name="game_results">Game\nResults</string>
     <string name="kda">%d/%d/%d</string>
     <string name="add_game_button_desc">New game</string>
     <string name="agent">Agent</string>
