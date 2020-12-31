@@ -32,7 +32,7 @@ class InsightsFragment : Fragment() {
 
         gameResultChart = GameResultChart(binding.pieChart, resources)
         CoroutineScope(Dispatchers.IO).launch {
-            val lastGames = GameDatabase.getInstance(requireContext()).getGameDao().getLastXGames(10)
+            val lastGames = GameDatabase.getInstance(requireContext()).getGameDao().getAllGames()
             gameResultChart.setGames(lastGames)
         }
 

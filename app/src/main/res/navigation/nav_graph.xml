@@ -45,8 +45,8 @@
     <fragment
         android:id="@+id/insightsFragment"
         android:name="com.example.valorantstattracker.insights.InsightsFragment"
-        android:label="fragment_insights"
-        tools:layout="@layout/fragment_insights" >
+        android:label="@string/insights"
+        tools:layout="@layout/fragment_insights">
         <action
             android:id="@+id/action_insights_to_games"
             app:destination="@id/gamesFragment"
