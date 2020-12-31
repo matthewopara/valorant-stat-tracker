@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/insights_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".insights.InsightsFragment">
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <include
+        android:id="@+id/first_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="@dimen/normal_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/second_agent_item"
+        app:layout_constraintStart_toEndOf="@+id/pie_chart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <include
+        android:id="@+id/second_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/medium_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pie_chart"
+        app:layout_constraintTop_toBottomOf="@+id/first_agent_item" />
+
+    <include
+        android:id="@+id/third_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="@dimen/normal_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/fourth_agent_item"
+        app:layout_constraintStart_toEndOf="@+id/first_agent_item"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <include
+        android:id="@+id/fourth_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/normal_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/second_agent_item"
+        app:layout_constraintTop_toBottomOf="@+id/third_agent_item" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
