@@ -30,7 +30,7 @@
     <string name="games_deleted">%d games deleted</string>
     <string name="undo">Undo</string>
     <string name="win_display">Wins: %d</string>
-    <string name="lose_display">Losses %d:</string>
+    <string name="lose_display">Losses: %d</string>
     <string name="draw_display">Draws: %d</string>
 
     <string name="error_number_required">A number is required</string>
