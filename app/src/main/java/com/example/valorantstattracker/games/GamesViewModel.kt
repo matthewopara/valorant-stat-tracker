@@ -61,7 +61,7 @@ class GamesViewModel(
 
     private fun resetGameListManager() {
         CoroutineScope(Dispatchers.IO).launch {
-            val games = gameDao.getAllGames().filter { it.deleteFlag == NOT_FLAGGED }
+            val games = gameDao.getAllGames()
             withContext(Dispatchers.Main) {
                 gameListManager.setGameItemList(games)
             }
@@ -161,10 +161,5 @@ class GamesViewModel(
 
     fun navigateToGameEntryComplete() {
         _navigateToGameEntry.value = false
-    }
-
-    private fun clearGameHistory() {
-        // TODO: Need to implement
-        //  Flag all games for deletion and reset game list manager
     }
 }
