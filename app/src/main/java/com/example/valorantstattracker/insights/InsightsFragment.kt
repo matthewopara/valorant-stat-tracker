@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.valorantstattracker.MainActivity
 import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.GameDatabase
@@ -19,12 +20,14 @@ import kotlinx.coroutines.launch
 class InsightsFragment : Fragment() {
 
     private lateinit var binding: FragmentInsightsBinding
+    private lateinit var insightsViewModel: InsightsViewModel
     private lateinit var gameResultChart: GameResultChart
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
         binding = FragmentInsightsBinding.inflate(inflater)
+        insightsViewModel = ViewModelProvider(this).get(InsightsViewModel::class.java)
         BasicUIUtil.hideFloatingActionButton(requireActivity() as MainActivity)
 
         gameResultChart = GameResultChart(binding.pieChart, resources)
@@ -34,6 +37,10 @@ class InsightsFragment : Fragment() {
         }
 
         gameResultChart.setOnValuePressedListener { trackers ->
+            insightsViewModel.setTrackers(trackers)
+        }
+
+        insightsViewModel.trackers.observe(viewLifecycleOwner) { trackers ->
             val agentItems = listOf(binding.firstAgentItem, binding.secondAgentItem, binding.thirdAgentItem, binding.fourthAgentItem)
             var count = trackers.size
             if (count > agentItems.size) {
