@@ -55,6 +55,10 @@ class GamesViewModel(
 
     private val recentlyDeletedGames = mutableListOf<Game>()
 
+    private val _showNoGamesText = MutableLiveData(true)
+    val showNoGamesText: LiveData<Boolean>
+        get() = _showNoGamesText
+
     init {
         resetGameListManager()
     }
@@ -64,6 +68,7 @@ class GamesViewModel(
             val games = gameDao.getAllGames()
             withContext(Dispatchers.Main) {
                 gameListManager.setGameItemList(games)
+                _showNoGamesText.value = games.isEmpty()
             }
         }
     }

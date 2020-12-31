@@ -73,11 +73,22 @@ class GamesFragment : Fragment() {
     }
 
     private fun displayUI() {
+        setNoGamesText()
         BasicUIUtil.makeTabLayoutVisible(requireActivity() as MainActivity)
         displayAllGames()
         makeSingleItemChanges()
         setUpActionMode()
         setUpDeleteConfirmation()
+    }
+
+    private fun setNoGamesText() {
+        gamesViewModel.showNoGamesText.observe(viewLifecycleOwner) { showText ->
+            if (showText) {
+                binding.noGamesText.visibility = View.VISIBLE
+            } else {
+                binding.noGamesText.visibility = View.GONE
+            }
+        }
     }
 
     private fun displayAllGames() {
