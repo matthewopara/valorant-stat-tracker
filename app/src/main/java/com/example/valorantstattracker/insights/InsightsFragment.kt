@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.valorantstattracker.MainActivity
+import com.example.valorantstattracker.R
 import com.example.valorantstattracker.database.GameDatabase
 import com.example.valorantstattracker.databinding.FragmentInsightsBinding
 import com.example.valorantstattracker.objects.Agent
@@ -32,23 +33,26 @@ class InsightsFragment : Fragment() {
             gameResultChart.setGames(lastGames)
         }
 
-        gameResultChart.setOnValuePressedListener {
-            val agentImageViews = listOf(binding.firstAgentImage, binding.secondAgentImage, binding.thirdAgentImage)
-            var count = it.size
-            if (count > agentImageViews.size) {
-                count = agentImageViews.size
+        gameResultChart.setOnValuePressedListener { trackers ->
+            val agentItems = listOf(binding.firstAgentItem, binding.secondAgentItem, binding.thirdAgentItem, binding.fourthAgentItem)
+            var count = trackers.size
+            if (count > agentItems.size) {
+                count = agentItems.size
             }
 
-            for (imageView in agentImageViews) {
-                imageView.visibility = View.INVISIBLE
+            for (item in agentItems) {
+                item.root.visibility = View.INVISIBLE
             }
 
             for (i in 0 until count) {
-                agentImageViews[i].visibility = View.VISIBLE
-                val imgRes = Agent.getImageResource(it[i].agentName)
+                agentItems[i].root.visibility = View.VISIBLE
+                agentItems[i].winCount.text = resources.getString(R.string.win_display, trackers[i].winCount)
+                agentItems[i].loseCount.text = resources.getString(R.string.lose_display, trackers[i].loseCount)
+                agentItems[i].drawCount.text = resources.getString(R.string.draw_display, trackers[i].drawCount)
+                val imgRes = Agent.getImageResource(trackers[i].agentName)
                 imgRes?.let { res ->
-                    agentImageViews[i].setImageResource(res)
-                    agentImageViews[i].contentDescription = it[i].agentName
+                    agentItems[i].agentView.setImageResource(res)
+                    agentItems[i].agentView.contentDescription = trackers[i].agentName
                 }
             }
         }

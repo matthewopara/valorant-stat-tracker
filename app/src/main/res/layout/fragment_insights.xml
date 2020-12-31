@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/insights_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".insights.InsightsFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pie_chart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp">
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="@dimen/small_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        </com.github.mikephil.charting.charts.PieChart>
+    </com.github.mikephil.charting.charts.PieChart>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+    <include
+        android:id="@+id/first_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/small_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pie_chart" />
 
-            <ImageView
-                android:id="@+id/first_agent_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:src="@tools:sample/avatars" />
+    <include
+        android:id="@+id/second_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/small_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/first_agent_item" />
 
-            <ImageView
-                android:id="@+id/second_agent_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:src="@tools:sample/avatars" />
+    <include
+        android:id="@+id/third_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/small_spacing"
+        app:layout_constraintStart_toEndOf="@+id/first_agent_item"
+        app:layout_constraintTop_toBottomOf="@+id/pie_chart" />
 
-            <ImageView
-                android:id="@+id/third_agent_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:src="@tools:sample/avatars" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <include
+        android:id="@+id/fourth_agent_item"
+        layout="@layout/layout_selected_agents"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/small_spacing"
+        app:layout_constraintStart_toEndOf="@+id/second_agent_item"
+        app:layout_constraintTop_toBottomOf="@+id/third_agent_item" />
 
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

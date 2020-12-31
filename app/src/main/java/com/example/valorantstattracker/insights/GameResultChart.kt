@@ -30,7 +30,7 @@ class GameResultChart(val chart: PieChart, private val resources: Resources) {
         chart.setCenterTextSize(20f)
         chart.setEntryLabelColor(Color.WHITE)
         chart.setUsePercentValues(true)
-        chart.legend.setCustom(emptyArray())
+        chart.legend.isEnabled = false
         chart.description.isEnabled = false
     }
 
@@ -66,14 +66,13 @@ class GameResultChart(val chart: PieChart, private val resources: Resources) {
                 GameResult.LOSE -> numOfLoses++
                 GameResult.DRAW -> numOfDraws++
             }
-            val tracker = allTrackers.find { it.agentName == game.agentName }
+            val tracker = trackerSet.find { it.agentName == game.agentName }
             if (tracker == null) {
                 val newTracker = GameResultTracker(game.agentName)
                 newTracker.addGameResult(game)
                 trackerSet.add(newTracker)
             } else {
                 tracker.addGameResult(game)
-                trackerSet.add(tracker)
             }
         }
         return trackerSet
