@@ -3,7 +3,7 @@
 ## Description
 An Android mobile application used to record results from a game of Valorant and track your performance from game to game. Also provides a chart to determine your best and worst agents. I started working on this project in order to gain experience using Kotlin in an Android app. This project was started after taking the "Developing Android Apps in Kotlin" Udacity course
 ## Project Status
-In Progress...
+In Hiatus...
 
 ## Technologies
 Kotlin version: 1.4.21  
