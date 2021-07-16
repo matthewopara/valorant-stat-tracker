@@ -24,4 +24,5 @@ git clone https://github.com/matthewopara/valorant-stat-tracker.git
 <img src="./screenshots/screenshot_new_game.png" width="250"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="./screenshots/screenshot_insights.png" width="250">
 
-
+## Run App in Browser
+https://appetize.io/app/za0ehmqfqz4bch94ah1h5q3j3g?orientation=portrait&osVersion=10.0
